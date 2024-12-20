@@ -1,11 +1,9 @@
-import { Login } from "./pages/Login"
+import AppRouter from "./routes/reactRouter"
 
 
 function App() {
 
-  return (
-    <Login/>
-  )
+  return <AppRouter/>
 }
 
 export default App
