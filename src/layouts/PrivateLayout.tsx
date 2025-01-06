@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router";
 import { useUserStore } from "../store/userStore";
 import { useEffect } from "react";
-import Sidebar from "../Components/Sidebar";
+import Sidebar from "../components/Sidebar";
 
 function PrivateLayout() {
   const navigate = useNavigate();

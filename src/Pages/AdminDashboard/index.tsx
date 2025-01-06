@@ -1,4 +1,4 @@
-import MRTable from "../../Components/MRTable";
+import MRTable from "../../components/MRTable";
 
 function AdminDashboard() {
   return (
