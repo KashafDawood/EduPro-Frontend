@@ -1,20 +1,22 @@
-// import PasswordInput from "@/components/custom/passwordInput";
-// import EmailInput from "@/components/custom/emailInput";
 import { Button } from "@/components/ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type FormFields = {
-  email: string;
-  password: string;
-};
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+type FormFields = z.infer<typeof schema>;
 
 const Login: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormFields>();
+  } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     console.log(data);
@@ -47,8 +49,8 @@ const Login: React.FC = () => {
             placeholder="Password"
             className="input"
           />
-          {errors.email && (
-            <div className="text-red-500">{errors.email.message}</div>
+          {errors.password && (
+            <div className="text-red-500">{errors.password.message}</div>
           )}
           <Button
             disabled={isSubmitting}
