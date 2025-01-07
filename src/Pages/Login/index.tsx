@@ -15,16 +15,18 @@ const Login: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     console.log(data);
+    reset();
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="flex justify-center items-center w-1/2 bg-blue-100">
+      <div className="flex justify-center items-center w-1/2 bg-green-100">
         <img
           src="images/login-bg.png"
           alt="Login Background"
@@ -38,7 +40,7 @@ const Login: React.FC = () => {
             {...register("email")}
             type="email"
             placeholder="Email"
-            className="input"
+            className={`input ${errors.email && "border-red-500"}`}
           />
           {errors.email && (
             <div className="text-red-500">{errors.email.message}</div>
@@ -47,7 +49,7 @@ const Login: React.FC = () => {
             {...register("password")}
             type="password"
             placeholder="Password"
-            className="input"
+            className={`input ${errors.password && "border-red-500"}`}
           />
           {errors.password && (
             <div className="text-red-500">{errors.password.message}</div>
