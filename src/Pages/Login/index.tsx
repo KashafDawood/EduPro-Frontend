@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import userLogin from "@/APIs/UserAPI/login";
 
 const schema = z.object({
   email: z.string().email(),
@@ -19,8 +20,9 @@ const Login: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    const response = await userLogin(data);
+    console.log(response.data);
     reset();
   };
 
