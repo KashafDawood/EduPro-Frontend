@@ -4,6 +4,11 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userLogin from "@/APIs/UserAPI/login";
+import { useUserStore } from "@/store/userStore";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import AlertSuccess from "@/components/Alerts/successAlert";
+import AlertError from "@/components/Alerts/errorAlert";
 
 const schema = z.object({
   email: z.string().email(),
@@ -20,14 +25,33 @@ const Login: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
+  const { isAuth, setAuth } = useUserStore();
+  const navigate = useNavigate();
+  const [isError, setError] = useState(false);
+
+  useEffect(() => {
+    if (isAuth) navigate("/dashboard");
+  }, [isAuth, navigate]);
+
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    const response = await userLogin(data);
-    console.log(response.data);
-    reset();
+    try {
+      const response = await userLogin(data);
+      if (response.data) {
+        console.log(response.data.signIn);
+        setAuth(true);
+      }
+      throw new Error(response.errors[0].message);
+      reset();
+    } catch (error) {
+      console.error(error ?? "An error occurred");
+      setError(true);
+    }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen">
+      {isAuth && <AlertSuccess>You Logged In Successfuly</AlertSuccess>}
+      {isError && <AlertError>An Error Occured</AlertError>}
       <div className="flex justify-center items-center w-1/2 bg-green-100">
         <img
           src="images/login-bg.png"

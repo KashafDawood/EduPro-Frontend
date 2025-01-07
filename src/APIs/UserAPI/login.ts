@@ -5,16 +5,14 @@ interface LoginData {
   password: string;
 }
 
-interface LoginResponse {
-  data: {
-    accessToken: string;
-    refreshToken: string;
-  };
-}
+// interface LoginResponse {
+//   data: {
+//     accessToken: string;
+//     refreshToken: string;
+//   };
+// }
 
-export default async function userLogin(
-  data: LoginData
-): Promise<LoginResponse> {
+export default async function userLogin(data: LoginData) {
   const query = `
     mutation {
       signIn(signInInput: { email: "${data.email}", password: "${data.password}" }) {
@@ -24,7 +22,7 @@ export default async function userLogin(
     }
   `;
 
-  const response = await axios.post<LoginResponse>(
+  const response = await axios.post(
     "http://localhost:3000/graphql",
     { query },
     { withCredentials: true }
