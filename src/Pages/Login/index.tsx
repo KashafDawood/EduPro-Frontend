@@ -1,4 +1,6 @@
-import { Input } from "@/components/ui/input";
+import PasswordInput from "@/components/custom/passwordInput";
+import EmailInput from "@/components/custom/emailInput";
+import { Button } from "@/components/ui/button";
 
 const Login: React.FC = () => {
   return (
@@ -10,18 +12,12 @@ const Login: React.FC = () => {
           className="max-w-90"
         />
       </div>
-      <div className="w-1/2 space-y-4 p-12">
-        <form>
-          <Input
-            type="email"
-            placeholder="Email"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+      <div className="w-1/2 space-y-4 p-12 text-md">
+        <h2 className="text-3xl text-center font-bold text-black">Login</h2>
+        <form className="m-4 p-12 space-y-4">
+          <EmailInput className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <PasswordInput className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <Button className="w-full py-5 text-md rounded-md">Login</Button>
         </form>
       </div>
     </div>
