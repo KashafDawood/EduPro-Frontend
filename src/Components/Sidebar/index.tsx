@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { FiHome, FiUser, FiSettings } from "react-icons/fi";
+import { FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import logout from "../../APIs/UserAPI/logout"; // Import the logout function
 
 const Sidebar: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    // Optionally, you can add logic to handle post-logout actions, such as redirecting the user
   };
 
   const menuItems = [
@@ -34,6 +40,15 @@ const Sidebar: React.FC = () => {
               {isExpanded && <span className="text-sm">{item.name}</span>}
             </li>
           ))}
+          <li
+            className="flex items-center gap-4 p-2 hover:bg-green-700 cursor-pointer"
+            onClick={handleLogout}
+          >
+            <span className="text-xl">
+              <FiLogOut />
+            </span>
+            {isExpanded && <span className="text-sm">Logout</span>}
+          </li>
         </ul>
       </div>
 

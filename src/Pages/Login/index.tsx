@@ -4,11 +4,12 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userLogin from "@/APIs/UserAPI/login";
-import { useUserStore } from "@/store/userStore";
+// import { useUserStore } from "@/store/userStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import AlertSuccess from "@/components/Alerts/successAlert";
 import AlertError from "@/components/Alerts/errorAlert";
+import useAuth from "@/hooks/useAuth";
 
 const schema = z.object({
   email: z.string().email(),
@@ -26,7 +27,7 @@ const Login: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
-  const { isAuth, setAuth } = useUserStore();
+  const isAuth = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +38,6 @@ const Login: React.FC = () => {
     try {
       const response = await userLogin(data);
       if (response.data) {
-        setAuth(true);
         reset();
       } else if (response.errors && response.errors.length > 0) {
         throw new Error(response.errors[0].message);

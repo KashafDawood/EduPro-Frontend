@@ -3,7 +3,7 @@ import axios from "axios";
 interface MeResponse {
   data: {
     me: {
-      id: string;
+      _id: string;
       email: string;
       name: string;
       accessToken: string;
@@ -15,7 +15,7 @@ export default async function getMe(): Promise<MeResponse> {
   const query = `
     query {
       me {
-        id
+        _id
         email
         name
         accessToken
