@@ -4,12 +4,12 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userLogin from "@/APIs/UserAPI/login";
-// import { useUserStore } from "@/store/userStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import AlertSuccess from "@/components/Alerts/successAlert";
 import AlertError from "@/components/Alerts/errorAlert";
 import useAuth from "@/hooks/useAuth";
+import { useUserStore } from "@/store/userStore";
 
 const schema = z.object({
   email: z.string().email(),
@@ -27,8 +27,9 @@ const Login: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
-  const isAuth = useAuth();
+  const { isAuth, setToken } = useUserStore();
   const navigate = useNavigate();
+  const { message: authSuccess, error: authError } = useAuth();
 
   useEffect(() => {
     if (isAuth) navigate("/dashboard");
@@ -38,6 +39,8 @@ const Login: React.FC = () => {
     try {
       const response = await userLogin(data);
       if (response.data) {
+        const { accessToken } = response.data.signIn;
+        setToken(accessToken);
         reset();
       } else if (response.errors && response.errors.length > 0) {
         throw new Error(response.errors[0].message);
@@ -49,6 +52,7 @@ const Login: React.FC = () => {
       setError("root", {
         message:
           (error as Error).message ??
+          authError ??
           "Something went wrong, please try again later.",
       });
     }
@@ -56,7 +60,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      {isAuth && <AlertSuccess>You Logged In Successfully</AlertSuccess>}
+      {isAuth && <AlertSuccess>{authSuccess}</AlertSuccess>}
       {!isAuth && errors.root?.message && (
         <AlertError>{errors.root.message}</AlertError>
       )}

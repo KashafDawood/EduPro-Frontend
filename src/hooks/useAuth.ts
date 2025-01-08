@@ -3,34 +3,31 @@ import { useUserStore } from "@/store/userStore";
 import getMe from "@/APIs/UserAPI/getMe";
 
 const useAuth = () => {
-  const [isAuth, setIsAuth] = useState(false);
-  const { setAuth, setUser } = useUserStore();
+  const { setAuth, setUser, token } = useUserStore();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const user = await getMe();
-        console.log(user);
-        console.log(user.data.me);
-        if (user) {
+        const user = await getMe(token);
+        if (user && user.data && user.data.me) {
+          console.log(user.data.me);
           setUser(user.data.me);
-          setIsAuth(true);
           setAuth(true);
+          setError(null);
         } else {
-          setIsAuth(false);
-          setAuth(false);
+          throw new Error("Unauthorized");
         }
       } catch (error) {
-        console.error("Failed to fetch user:", error);
-        setIsAuth(false);
         setAuth(false);
+        setError((error as Error).message);
       }
     };
 
     checkAuth();
-  }, [setAuth, setUser]);
+  }, [token, setAuth, setUser]);
 
-  return isAuth;
+  return { message: "You Logged In Successfully!", error };
 };
 
 export default useAuth;

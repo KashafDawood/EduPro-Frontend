@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import logout from "../../APIs/UserAPI/logout"; // Import the logout function
+import { useNavigate } from "react-router";
+import { useUserStore } from "@/store/userStore";
 
 const Sidebar: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
+
+  const { clearUser } = useUserStore();
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
@@ -12,6 +17,8 @@ const Sidebar: React.FC = () => {
 
   const handleLogout = async () => {
     await logout();
+    clearUser();
+    navigate("/");
     // Optionally, you can add logic to handle post-logout actions, such as redirecting the user
   };
 

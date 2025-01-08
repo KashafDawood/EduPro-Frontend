@@ -6,19 +6,17 @@ interface MeResponse {
       _id: string;
       email: string;
       name: string;
-      accessToken: string;
     };
   };
 }
 
-export default async function getMe(): Promise<MeResponse> {
+export default async function getMe(accessToken: string): Promise<MeResponse> {
   const query = `
-    query {
-      me {
+    mutation {
+      me(accessToken: "${accessToken}") {
         _id
         email
         name
-        accessToken
       }
     }
   `;
