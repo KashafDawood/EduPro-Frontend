@@ -37,15 +37,20 @@ const Login: React.FC = () => {
     try {
       const response = await userLogin(data);
       if (response.data) {
-        console.log(response.data.signIn);
         setAuth(true);
         reset();
-      } else {
+      } else if (response.errors && response.errors.length > 0) {
         throw new Error(response.errors[0].message);
+      } else {
+        throw new Error("An unknown error occurred");
       }
     } catch (error) {
-      console.error(error ?? "An error occurred");
-      setError("root", { message: (error as Error).message });
+      console.error(error);
+      setError("root", {
+        message:
+          (error as Error).message ??
+          "Something went wrong, please try again later.",
+      });
     }
   };
 
