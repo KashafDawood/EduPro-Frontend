@@ -1,31 +1,10 @@
-import axios from "axios";
+import { gql } from "@apollo/client/core/core.cjs";
 
-interface LoginData {
-  email: string;
-  password: string;
-}
-
-// interface LoginResponse {
-//   data: {
-//     accessToken: string;
-//     refreshToken: string;
-//   };
-// }
-
-export default async function userLogin(data: LoginData) {
-  const query = `
-    mutation {
-      signIn(signInInput: { email: "${data.email}", password: "${data.password}" }) {
-        accessToken
-        refreshToken
-      }
+export const LOGIN_MUTATION = gql`
+  mutation SignIn($email: String!, $password: String!) {
+    signIn(signInInput: { email: $email, password: $password }) {
+      accessToken
+      refreshToken
     }
-  `;
-
-  const response = await axios.post(
-    "http://localhost:3000/graphql",
-    { query },
-    { withCredentials: true }
-  );
-  return response.data;
-}
+  }
+`;

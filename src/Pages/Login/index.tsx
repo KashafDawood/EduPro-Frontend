@@ -3,13 +3,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import userLogin from "@/APIs/UserAPI/login";
+import { LOGIN_MUTATION } from "@/APIs/UserAPI/login";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import AlertSuccess from "@/components/Alerts/successAlert";
 import AlertError from "@/components/Alerts/errorAlert";
 import useAuth from "@/hooks/useAuth";
 import { useUserStore } from "@/store/userStore";
+import { useMutation } from "@apollo/client/react/hooks";
 
 const schema = z.object({
   email: z.string().email(),
@@ -30,25 +31,34 @@ const Login: React.FC = () => {
   const { isAuth, setToken } = useUserStore();
   const navigate = useNavigate();
   const { message: authSuccess, error: authError } = useAuth();
+  const [login, { error: loginError, data: loginData }] =
+    useMutation(LOGIN_MUTATION);
 
   useEffect(() => {
     if (isAuth) navigate("/dashboard");
   }, [isAuth, navigate]);
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  useEffect(() => {
+    if (loginData) {
+      const { accessToken } = loginData.signIn;
+      setToken(accessToken);
+      reset();
+    }
+  }, [loginData, reset, setToken]);
+
+  useEffect(() => {
+    if (loginError) {
+      setError("root", {
+        message:
+          loginError.message ?? "Something went wrong, please try again later.",
+      });
+    }
+  }, [loginError, setError]);
+
+  const onSubmit: SubmitHandler<FormFields> = async (formData) => {
     try {
-      const response = await userLogin(data);
-      if (response.data) {
-        const { accessToken } = response.data.signIn;
-        setToken(accessToken);
-        reset();
-      } else if (response.errors && response.errors.length > 0) {
-        throw new Error(response.errors[0].message);
-      } else {
-        throw new Error("An unknown error occurred");
-      }
+      await login({ variables: formData });
     } catch (error) {
-      console.error(error);
       setError("root", {
         message:
           (error as Error).message ??
