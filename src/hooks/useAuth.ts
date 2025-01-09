@@ -11,7 +11,6 @@ const useAuth = () => {
       try {
         const user = await getMe(token);
         if (user && user.data && user.data.me) {
-          console.log(user.data.me);
           setUser(user.data.me);
           setAuth(true);
           setError(null);
