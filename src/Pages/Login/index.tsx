@@ -62,7 +62,7 @@ const Login: React.FC = () => {
       setError("root", {
         message:
           (error as Error).message ??
-          authError ??
+          authError?.message ??
           "Something went wrong, please try again later.",
       });
     }

@@ -1,30 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
-import getMe from "@/APIs/UserAPI/getMe";
+import { GET_ME } from "@/APIs/UserAPI/getMe";
+import { useMutation } from "@apollo/client/react/hooks";
 
 const useAuth = () => {
   const { setAuth, setUser, token } = useUserStore();
-  const [error, setError] = useState<string | null>(null);
+  const [getMe, { error, data }] = useMutation(GET_ME);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const user = await getMe(token);
-        if (user && user.data && user.data.me) {
-          setUser(user.data.me);
-          setAuth(true);
-          setError(null);
-        } else {
-          throw new Error("Unauthorized");
-        }
-      } catch (error) {
+    const fetchData = async () => {
+      if (token) {
+        await getMe({ variables: { accessToken: token } });
+      }
+    };
+    fetchData();
+  }, [token, getMe]);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      if (data) {
+        setUser(data.me);
+        setAuth(true);
+      } else {
         setAuth(false);
-        setError((error as Error).message);
       }
     };
 
     checkAuth();
-  }, [token, setAuth, setUser]);
+  }, [token, setAuth, setUser, data, error]);
 
   return { message: "You Logged In Successfully!", error };
 };
