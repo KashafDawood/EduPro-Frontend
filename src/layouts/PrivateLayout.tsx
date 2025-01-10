@@ -1,7 +1,9 @@
 import { Outlet, useNavigate } from "react-router";
 import { useUserStore } from "../store/userStore";
 import { useEffect } from "react";
-import Sidebar from "../components/Sidebar";
+// import Sidebar from "../components/Sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/Sidebar/app-sidebar";
 
 function PrivateLayout() {
   const navigate = useNavigate();
@@ -12,8 +14,11 @@ function PrivateLayout() {
   }, [isAuth, navigate]);
   return (
     <div className="flex">
-      <Sidebar />
-      <Outlet />
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarTrigger />
+        <Outlet />
+      </SidebarProvider>
     </div>
   );
 }
