@@ -1,16 +1,7 @@
-import axios from "axios";
+import { gql } from "@apollo/client/core/core.cjs";
 
-export default async function logout() {
-  const mutation = `
-    mutation {
-      logout
-    }
-  `;
-
-  const response = await axios.post(
-    "http://localhost:3000/graphql",
-    { query: mutation },
-    { withCredentials: true }
-  );
-  return response.data;
-}
+export const LOGOUT_MUTATION = gql`
+  mutation logout {
+    logout
+  }
+`;
