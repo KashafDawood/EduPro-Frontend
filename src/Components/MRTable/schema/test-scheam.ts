@@ -14,5 +14,19 @@ export const TestSchema: { TableSchema: MRT_ColumnDef<JSON, unknown>[] } = {
       header: "Age",
       size: 200,
     },
+    // {
+    //   id: "user.email",
+    //   accessorKey: "user.email",
+    //   header: "Email",
+    //   size: 200,
+    // },
   ],
 };
+
+// data = [
+//   {
+//     name: "talha",
+//     age: 60,
+//     user: { email: "email" },
+//   },
+// ];

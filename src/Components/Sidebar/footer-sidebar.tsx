@@ -12,12 +12,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useUserStore } from "@/store/userStore";
 import { User2, ChevronUp } from "lucide-react";
-import logout from "@/APIs/UserAPI/logout";
+import { LOGOUT_MUTATION } from "@/APIs/UserAPI/logout";
 import { useNavigate } from "react-router";
+import { useMutation } from "@apollo/client/react/hooks";
 
 export function Footer() {
   const { name, clearUser } = useUserStore();
   const navigate = useNavigate();
+  const [logout] = useMutation(LOGOUT_MUTATION);
 
   const handleLogout = async () => {
     await logout();

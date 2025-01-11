@@ -5,9 +5,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LOGIN_MUTATION } from "@/APIs/UserAPI/login";
 import { useEffect } from "react";
-import { useMutation } from "@apollo/client/react/hooks";
 import { useUserStore } from "@/store/userStore";
 import AlertError from "@/components/Alerts/errorAlert";
+import { useMutation } from "@apollo/client/react/hooks";
 
 const schema = z.object({
   email: z.string().email(),
@@ -33,7 +33,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setError }) => {
     useMutation(LOGIN_MUTATION);
 
   useEffect(() => {
-    if (loginData) {
+    if (loginData?.signIn) {
       const { accessToken } = loginData.signIn;
       setToken(accessToken);
       reset();
@@ -49,9 +49,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ setError }) => {
     }
   }, [loginError, setError]);
 
-  const onSubmit: SubmitHandler<FormFields> = async (formData) => {
+  const onSubmit: SubmitHandler<FormFields> = (formData) => {
     try {
-      await login({ variables: formData });
+      login({ variables: formData });
     } catch (error) {
       setError(
         (error as Error).message ??

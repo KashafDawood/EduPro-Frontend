@@ -1,8 +1,8 @@
 import { Outlet, useNavigate } from "react-router";
 import { useUserStore } from "../store/userStore";
 import { useEffect } from "react";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 function PrivateLayout() {
   const defaultOpen = localStorage.getItem("sidebar:state") === "true";
