@@ -10,9 +10,21 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { useUserStore } from "@/store/userStore";
 import { User2, ChevronUp } from "lucide-react";
+import logout from "@/APIs/UserAPI/logout";
+import { useNavigate } from "react-router";
 
 export function Footer() {
+  const { name, clearUser } = useUserStore();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    clearUser();
+    navigate("/");
+  };
+
   return (
     <SidebarFooter>
       <SidebarMenu>
@@ -20,7 +32,7 @@ export function Footer() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton>
-                <User2 /> Username
+                <User2 /> {name}
                 <ChevronUp className="ml-auto" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
@@ -28,14 +40,11 @@ export function Footer() {
               side="top"
               className="w-[--radix-popper-anchor-width]"
             >
-              <DropdownMenuItem>
-                <span>Account</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Billing</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Sign out</span>
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="cursor-pointer"
+              >
+                <span>Logout</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

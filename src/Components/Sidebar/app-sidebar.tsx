@@ -16,7 +16,7 @@ import { Footer } from "./footer-sidebar";
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/dashboard",
     icon: Home,
   },
   {

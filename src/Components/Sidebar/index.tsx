@@ -19,7 +19,6 @@ const Sidebar: React.FC = () => {
     await logout();
     clearUser();
     navigate("/");
-    // Optionally, you can add logic to handle post-logout actions, such as redirecting the user
   };
 
   const menuItems = [
