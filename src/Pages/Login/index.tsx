@@ -23,12 +23,12 @@ const Login: React.FC = () => {
           <div className="w-full max-w-xs">
             {isAuth && <AlertSuccess>{authSuccess}</AlertSuccess>}
             {error && <AlertError>{error}</AlertError>}
-            <h2 className="mb-4 text-center text-2xl font-bold">Login</h2>
+            <h2 className="mb-4 text-center text-4xl font-bold">Login</h2>
             <LoginForm setError={setError} />
           </div>
         </div>
       </div>
-      <div className="relative hidden bg-muted lg:block">
+      <div className="relative hidden bg-green-100 lg:block">
         <img
           src="images/login-bg.png"
           alt="Login Background"

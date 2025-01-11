@@ -61,30 +61,38 @@ const LoginForm: React.FC<LoginFormProps> = ({ setError }) => {
   };
 
   return (
-    <form className="m-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
       {errors.root?.message && <AlertError>{errors.root.message}</AlertError>}
-      <Input
-        {...register("email")}
-        type="email"
-        placeholder="Email"
-        className={`input ${errors.email && "border-red-500"}`}
-      />
-      {errors.email && (
-        <div className="text-red-500">{errors.email.message}</div>
-      )}
-      <Input
-        {...register("password")}
-        type="password"
-        placeholder="Password"
-        className={`input ${errors.password && "border-red-500"}`}
-      />
-      {errors.password && (
-        <div className="text-red-500">{errors.password.message}</div>
-      )}
+      <div className="mb-4">
+        <Input
+          {...register("email")}
+          type="email"
+          placeholder="Email"
+          className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary ${
+            errors.email && "border-red-500"
+          }`}
+        />
+        {errors.email && (
+          <div className="text-red-500">{errors.email.message}</div>
+        )}
+      </div>
+      <div className="mb-4">
+        <Input
+          {...register("password")}
+          type="password"
+          placeholder="Password"
+          className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary ${
+            errors.password && "border-red-500"
+          }`}
+        />
+        {errors.password && (
+          <div className="text-red-500">{errors.password.message}</div>
+        )}
+      </div>
       <Button
         disabled={isSubmitting}
         type="submit"
-        className="w-full py-5 text-md rounded-md"
+        className="w-full py-3 text-md font-semibold rounded-md bg-primary text-white hover:bg-primary-dark"
       >
         {isSubmitting ? "Loading..." : "Login"}
       </Button>
