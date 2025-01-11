@@ -5,12 +5,12 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Footer } from "./footer-sidebar";
+import { Header } from "./header-sidebar";
 
 // Menu items.
 const items = [
@@ -29,9 +29,9 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
+      <Header />
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
