@@ -8,6 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { Footer } from "./footer-sidebar";
 import { Header } from "./header-sidebar";
@@ -30,6 +31,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <Header />
+      <SidebarSeparator />
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
