@@ -1,7 +1,6 @@
 import { Outlet, useNavigate } from "react-router";
 import { useUserStore } from "../store/userStore";
 import { useEffect } from "react";
-// import Sidebar from "../components/Sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
 
