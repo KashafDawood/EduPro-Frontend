@@ -1,115 +1,39 @@
-import { Button } from "@/components/ui/button";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { LOGIN_MUTATION } from "@/APIs/UserAPI/login";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import AlertSuccess from "@/components/Alerts/successAlert";
 import AlertError from "@/components/Alerts/errorAlert";
 import useAuth from "@/hooks/useAuth";
 import { useUserStore } from "@/store/userStore";
-import { useMutation } from "@apollo/client/react/hooks";
-
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-
-type FormFields = z.infer<typeof schema>;
+import LoginForm from "@/components/LoginForm/LoginForm";
 
 const Login: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm<FormFields>({ resolver: zodResolver(schema) });
-
-  const { isAuth, setToken } = useUserStore();
+  const { isAuth } = useUserStore();
   const navigate = useNavigate();
-  const { message: authSuccess, error: authError } = useAuth();
-  const [login, { error: loginError, data: loginData }] =
-    useMutation(LOGIN_MUTATION);
+  const { message: authSuccess } = useAuth();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isAuth) navigate("/dashboard");
   }, [isAuth, navigate]);
 
-  useEffect(() => {
-    if (loginData) {
-      const { accessToken } = loginData.signIn;
-      setToken(accessToken);
-      reset();
-    }
-  }, [loginData, reset, setToken]);
-
-  useEffect(() => {
-    if (loginError) {
-      setError("root", {
-        message:
-          loginError.message ?? "Something went wrong, please try again later.",
-      });
-    }
-  }, [loginError, setError]);
-
-  const onSubmit: SubmitHandler<FormFields> = async (formData) => {
-    try {
-      await login({ variables: formData });
-    } catch (error) {
-      setError("root", {
-        message:
-          (error as Error).message ??
-          authError?.message ??
-          "Something went wrong, please try again later.",
-      });
-    }
-  };
-
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      {isAuth && <AlertSuccess>{authSuccess}</AlertSuccess>}
-      {!isAuth && errors.root?.message && (
-        <AlertError>{errors.root.message}</AlertError>
-      )}
-      <div className="flex justify-center items-center w-1/2 bg-green-100">
+    <div className="grid min-h-screen lg:grid-cols-2">
+      <div className="flex flex-col gap-4 p-6 md:p-10">
+        <div className="flex flex-1 items-center justify-center">
+          <div className="w-full max-w-xs">
+            {isAuth && <AlertSuccess>{authSuccess}</AlertSuccess>}
+            {error && <AlertError>{error}</AlertError>}
+            <h2 className="mb-4 text-center text-2xl font-bold">Login</h2>
+            <LoginForm setError={setError} />
+          </div>
+        </div>
+      </div>
+      <div className="relative hidden bg-muted lg:block">
         <img
           src="images/login-bg.png"
           alt="Login Background"
-          className="max-w-90"
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
-      </div>
-      <div className="w-1/2 space-y-4 p-20 text-md">
-        <h2 className="text-3xl text-center font-bold text-black">Login</h2>
-        <form className="m-4 p-12 space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            {...register("email")}
-            type="email"
-            placeholder="Email"
-            className={`input ${errors.email && "border-red-500"}`}
-          />
-          {errors.email && (
-            <div className="text-red-500">{errors.email.message}</div>
-          )}
-          <Input
-            {...register("password")}
-            type="password"
-            placeholder="Password"
-            className={`input ${errors.password && "border-red-500"}`}
-          />
-          {errors.password && (
-            <div className="text-red-500">{errors.password.message}</div>
-          )}
-          <Button
-            disabled={isSubmitting}
-            type="submit"
-            className="w-full py-5 text-md rounded-md"
-          >
-            {isSubmitting ? "Loading..." : "Login"}
-          </Button>
-        </form>
       </div>
     </div>
   );
