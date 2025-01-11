@@ -1,3 +1,4 @@
+import { CommonForm } from "@/components/CommonForm";
 import MRTable from "../../components/MRTable";
 
 function AdminDashboard() {
@@ -8,6 +9,11 @@ function AdminDashboard() {
         <div className="mt-4">
           <MRTable name="TestTable" data={[]} />
         </div>
+        <CommonForm
+          formName={"studentForm"}
+          buttonStyle={"!ml-[-100px]"}
+          buttonText={"Add Student"}
+        />
       </div>
     </>
   );
