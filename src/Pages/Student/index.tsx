@@ -2,9 +2,12 @@ import { useQuery } from "@apollo/client/react/hooks";
 import MRTable from "../../components/MRTable";
 import { GET_ALL_Student } from "@/APIs/StudentAPI/getAllStudent";
 import { Skeleton } from "@/components/ui/skeleton";
+import AlertError from "@/components/Alerts/errorAlert";
 
 export default function Student() {
-  const { data, loading } = useQuery(GET_ALL_Student);
+  const { data, loading, error } = useQuery(GET_ALL_Student);
+
+  if (error) return <AlertError>{error.message}</AlertError>;
 
   return (
     <div className="min-h-screen p-6 w-full text-black">
