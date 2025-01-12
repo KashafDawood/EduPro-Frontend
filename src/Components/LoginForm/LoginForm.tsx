@@ -92,7 +92,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setError }) => {
       <Button
         disabled={isSubmitting}
         type="submit"
-        className="w-full py-3 text-md font-semibold rounded-md bg-primary text-white hover:bg-primary-dark"
+        className="w-full py-3 text-md font-semibold rounded-md bg-primary text-white"
       >
         {isSubmitting ? "Loading..." : "Login"}
       </Button>
