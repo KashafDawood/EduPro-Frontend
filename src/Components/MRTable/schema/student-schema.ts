@@ -1,6 +1,7 @@
-import { MRT_ColumnDef } from "material-react-table";
+import { TableSchema } from "../types";
 
-export const StudentSchema: { TableSchema: MRT_ColumnDef<JSON, unknown>[] } = {
+export const StudentSchema: TableSchema = {
+  styles: { maxHeight: "70vh", width: "93vw" },
   TableSchema: [
     {
       id: "studentName",

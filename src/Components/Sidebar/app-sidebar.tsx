@@ -11,8 +11,8 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
-import { Footer } from "./footer-sidebar";
 import { Header } from "./header-sidebar";
+import { Footer } from "./footer-sidebar";
 
 // Menu items.
 const items = [
