@@ -25,8 +25,8 @@ function MRTable({ name, data = [], loading }: MRTableProps) {
       isLoading: loading, //cell skeletons and loading overlay}
     },
     muiTableContainerProps: { sx: { ...(meta?.styles || {}) } },
-    enableRowVirtualization: true,
-    enableColumnVirtualization: true,
+    // enableRowVirtualization: true,
+    // enableColumnVirtualization: true,
     enablePagination: false,
   });
 
