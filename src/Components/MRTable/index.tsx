@@ -9,17 +9,17 @@ interface MRTableProps {
   data: JSON[];
 }
 
-const sampleData = [
-  { name: "John Doe", age: 30 },
-  { name: "Jane Doe", age: 25 },
-];
+// const sampleData = [
+//   { name: "John Doe", age: 30 },
+//   { name: "Jane Doe", age: 25 },
+// ];
 
-function MRTable({ name }: MRTableProps) {
+function MRTable({ name, data }: MRTableProps) {
   const meta = schema[name];
 
   const table = useMaterialReactTable({
     columns: meta.TableSchema,
-    data: sampleData as unknown as JSON[], //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableRowSelection: true, //enable some features
     enableColumnOrdering: true, //enable a feature for all columns
     enableGlobalFilter: false, //turn off a feature
