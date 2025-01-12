@@ -12,7 +12,7 @@ export function Header() {
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" asChild>
-            <a href="#">
+            <a href="/dashboard">
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-blue-300">
                 <BookOpen size={18} />
               </div>
