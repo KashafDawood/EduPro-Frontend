@@ -1,12 +1,13 @@
-// import { useQuery } from "@apollo/client/react/hooks";
+import { useQuery } from "@apollo/client/react/hooks";
 // import MRTable from "../../components/MRTable";
-// import { GET_ALL_Student } from "@/APIs/StudentAPI/getAllStudent";
-// import AlertError from "@/components/Alerts/errorAlert";
+import AlertError from "@/components/Alerts/errorAlert";
+import { GET_ALL_TEACHER } from "@/APIs/TeacherAPI/getAllTeacher";
 
 export default function Teacher() {
-  //   const { data, loading, error } = useQuery(GET_ALL_Student);
+  const { data, loading, error } = useQuery(GET_ALL_TEACHER);
 
-  //   if (error) return <AlertError>{error.message}</AlertError>;
+  if (error) return <AlertError>{error.message}</AlertError>;
+  console.log(data);
 
   return (
     <div className="min-h-screen p-6 w-full text-black">
