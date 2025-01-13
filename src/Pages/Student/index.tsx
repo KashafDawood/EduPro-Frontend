@@ -1,13 +1,26 @@
-import { useQuery } from "@apollo/client/react/hooks";
+import { useLazyQuery } from "@apollo/client/react/hooks";
 import MRTable from "../../components/MRTable";
 import { GET_ALL_Student } from "@/APIs/StudentAPI/getAllStudent";
 import AlertError from "@/components/Alerts/errorAlert";
 import { StudentForm } from "./Form/StudentForm";
+import { useEffect, useState } from "react";
 
 export default function Student() {
-  const { data, loading, error } = useQuery(GET_ALL_Student, {
-    fetchPolicy: "cache-first",
-  });
+  const [students, setStudents] = useState<JSON[] | null>(null);
+  const [fetchStudents, { data, loading, error }] =
+    useLazyQuery(GET_ALL_Student);
+
+  useEffect(() => {
+    if (!students || students.length === 0) {
+      fetchStudents();
+    }
+  }, [students, fetchStudents]);
+
+  useEffect(() => {
+    if (data?.findAllStudent && (!students || students.length === 0)) {
+      setStudents(data.findAllStudent);
+    }
+  }, [data, students]);
 
   if (error) return <AlertError>{error.message}</AlertError>;
 
@@ -18,11 +31,7 @@ export default function Student() {
         <StudentForm />
       </div>
       <div className="mt-4">
-        <MRTable
-          name="StudentTable"
-          data={data?.findAllStudent}
-          loading={loading}
-        />
+        <MRTable name="StudentTable" data={students || []} loading={loading} />
       </div>
     </div>
   );
