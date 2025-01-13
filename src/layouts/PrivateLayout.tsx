@@ -18,11 +18,13 @@ function PrivateLayout() {
   }, [defaultOpen]);
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar />
         <SidebarTrigger />
-        <Outlet />
+        <div className="flex-1 overflow-auto">
+          <Outlet />
+        </div>
       </SidebarProvider>
     </div>
   );
