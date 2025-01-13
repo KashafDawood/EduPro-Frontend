@@ -1,4 +1,5 @@
 import { Home, GraduationCap } from "lucide-react";
+import { FaChalkboardTeacher } from "react-icons/fa";
 import { Link } from "react-router";
 import {
   Sidebar,
@@ -29,6 +30,11 @@ const items = [
     title: "Student",
     url: "/student",
     icon: GraduationCap,
+  },
+  {
+    title: "Teacher",
+    url: "/teacher",
+    icon: FaChalkboardTeacher,
   },
 ];
 
