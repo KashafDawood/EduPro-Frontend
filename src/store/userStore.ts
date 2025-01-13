@@ -49,7 +49,6 @@ export const useUserStore = create(
         name: state.name,
         email: state.email,
         isAuth: state.isAuth,
-        token: state.token,
       }),
     }
   )

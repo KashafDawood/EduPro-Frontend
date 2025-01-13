@@ -10,5 +10,6 @@ export default [
   layout("./layouts/PrivateLayout.tsx", [
     route("/dashboard", "./Pages/AdminDashboard/index.tsx"),
     route("/student", "./Pages/Student/index.tsx"),
+    route("/teacher", "./Pages/Teacher/index.tsx"),
   ]),
 ] satisfies RouteConfig;

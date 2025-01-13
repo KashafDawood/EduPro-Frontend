@@ -33,7 +33,7 @@ export const Slideout: React.FC<SlideoutProps> = ({
     return () => {
       reset();
     };
-  });
+  }, [reset]);
 
   return (
     <Sheet>
