@@ -5,7 +5,9 @@ import AlertError from "@/components/Alerts/errorAlert";
 import { StudentForm } from "./Form/StudentForm";
 
 export default function Student() {
-  const { data, loading, error } = useQuery(GET_ALL_Student);
+  const { data, loading, error } = useQuery(GET_ALL_Student, {
+    fetchPolicy: "cache-first",
+  });
 
   if (error) return <AlertError>{error.message}</AlertError>;
 

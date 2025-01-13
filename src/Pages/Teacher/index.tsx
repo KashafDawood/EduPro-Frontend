@@ -4,7 +4,9 @@ import AlertError from "@/components/Alerts/errorAlert";
 import { GET_ALL_TEACHER } from "@/APIs/TeacherAPI/getAllTeacher";
 
 export default function Teacher() {
-  const { data, loading, error } = useQuery(GET_ALL_TEACHER);
+  const { data, loading, error } = useQuery(GET_ALL_TEACHER, {
+    fetchPolicy: "cache-first",
+  });
 
   if (error) return <AlertError>{error.message}</AlertError>;
 
