@@ -11,6 +11,7 @@ import { Link } from "react-router";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
@@ -19,13 +20,13 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { Header } from "./header-sidebar";
-import { Footer } from "./footer-sidebar";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { UserSidebar } from "./user-sidebar";
 
 const items = [
   {
@@ -99,7 +100,9 @@ export function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-        <Footer />
+        <SidebarFooter>
+          <UserSidebar />
+        </SidebarFooter>
       </Sidebar>
     </TooltipProvider>
   );
