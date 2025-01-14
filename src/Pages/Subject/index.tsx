@@ -3,6 +3,7 @@ import MRTable from "../../components/MRTable";
 import AlertError from "@/components/Alerts/errorAlert";
 import { useEffect, useState } from "react";
 import { GET_ALL_SUBJECT } from "@/APIs/SubjectAPI/getAllSubject";
+import { SubjectForm } from "./Form/SubjectForm";
 
 export default function Subject() {
   const [subjects, setSubjects] = useState<JSON[] | null>(null);
@@ -27,6 +28,7 @@ export default function Subject() {
     <div className="min-h-screen p-6 w-full text-black">
       <div className="flex items-center justify-between p-4">
         <h1 className="text-xl font-bold">Subject Page</h1>
+        <SubjectForm />
       </div>
       <div className="mt-4">
         <MRTable name="SubjectTable" data={subjects || []} loading={loading} />
