@@ -3,6 +3,7 @@ import MRTable from "../../components/MRTable";
 import AlertError from "@/components/Alerts/errorAlert";
 import { GET_ALL_TEACHER } from "@/APIs/TeacherAPI/getAllTeacher";
 import { useEffect, useState } from "react";
+import { TeacherForm } from "./Form/TeacherForm";
 
 export default function Teacher() {
   const [teachers, setTeachers] = useState<JSON[] | null>(null);
@@ -27,6 +28,7 @@ export default function Teacher() {
     <div className="min-h-screen p-6 w-full text-black">
       <div className="flex items-center justify-between p-4">
         <h1 className="text-xl font-bold">Teacher Page</h1>
+        <TeacherForm />
       </div>
       <div className="mt-4">
         <MRTable name="TeacherTable" data={teachers || []} loading={loading} />
