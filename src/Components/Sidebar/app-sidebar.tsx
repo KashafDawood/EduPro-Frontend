@@ -1,5 +1,4 @@
 import {
-  Home,
   GraduationCap,
   ReceiptText,
   LibraryBig,
@@ -29,11 +28,6 @@ import {
 import { UserSidebar } from "./user-sidebar";
 
 const items = [
-  {
-    title: "Home",
-    url: "/dashboard",
-    icon: Home,
-  },
   {
     title: "Student",
     url: "/student",
