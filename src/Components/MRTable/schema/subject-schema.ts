@@ -1,13 +1,14 @@
 import { TableSchema } from "../types";
+import { defaultStyles, defaultSize } from "./schema-helpers";
 
 export const SubjectSchema: TableSchema = {
-  styles: { maxHeight: "70vh", width: "93vw" },
+  styles: defaultStyles,
   TableSchema: [
     {
       id: "name",
       accessorKey: "name",
       header: "Name",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "marks",

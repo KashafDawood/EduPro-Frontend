@@ -1,85 +1,86 @@
 import { TableSchema } from "../types";
+import { defaultStyles, defaultSize } from "./schema-helpers";
 
 export const TeacherSchema: TableSchema = {
-  styles: { maxHeight: "70vh", width: "93vw" },
+  styles: defaultStyles,
   TableSchema: [
     {
       id: "name",
       accessorKey: "name",
       header: "Name",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "phone",
       accessorKey: "phone",
       header: "Phone",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "guardianPhone",
       accessorKey: "guardianPhone",
       header: "Guardian Phone",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "photo",
       accessorKey: "photo",
       header: "Photo",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "address",
       accessorKey: "address",
       header: "Address",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "guardianName",
       accessorKey: "guardianName",
       header: "Guardian Name",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "guardianRelation",
       accessorKey: "guardianRelation",
       header: "Guardian Relation",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "CNIC",
       accessorKey: "CNIC",
       header: "CNIC",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "guardianCNIC",
       accessorKey: "guardianCNIC",
       header: "Guardian CNIC",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "dateOfBirth",
       accessorKey: "dateOfBirth",
       header: "Date of Birth",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "dateOfJoining",
       accessorKey: "dateOfJoining",
       header: "Date of Joining",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "qualification",
       accessorKey: "qualification",
       header: "Qualification",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "salary",
       accessorKey: "salary",
       header: "Salary",
-      size: 200,
+      size: defaultSize,
     },
   ],
 };

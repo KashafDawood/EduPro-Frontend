@@ -1,43 +1,44 @@
 import { TableSchema } from "../types";
+import { defaultStyles, defaultSize } from "./schema-helpers";
 
 export const ExpenseSchema: TableSchema = {
-  styles: { maxHeight: "70vh", width: "93vw" },
+  styles: defaultStyles,
   TableSchema: [
     {
       id: "salaries",
       accessorKey: "salaries",
       header: "Salaries",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "buildingExpense",
       accessorKey: "buildingExpense",
       header: "Building Expense",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "bills",
       accessorKey: "bills",
       header: "Bills",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "miscellaneousExpense",
       accessorKey: "miscellaneousExpense",
       header: "Miscellaneous Expense",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "month",
       accessorKey: "month",
       header: "Month",
-      size: 200,
+      size: defaultSize,
     },
     {
       id: "year",
       accessorKey: "year",
       header: "Year",
-      size: 200,
+      size: defaultSize,
     },
   ],
 };

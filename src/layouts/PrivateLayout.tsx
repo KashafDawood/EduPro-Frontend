@@ -2,7 +2,11 @@ import { Outlet, useNavigate } from "react-router";
 import { useUserStore } from "../store/userStore";
 import { useEffect } from "react";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 
 function PrivateLayout() {
   const defaultOpen = localStorage.getItem("sidebar:state") === "true";
@@ -22,9 +26,9 @@ function PrivateLayout() {
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar />
         <SidebarTrigger />
-        <div className="flex-1 overflow-auto">
+        <SidebarInset className="flex-1 overflow-auto">
           <Outlet />
-        </div>
+        </SidebarInset>
       </SidebarProvider>
     </div>
   );

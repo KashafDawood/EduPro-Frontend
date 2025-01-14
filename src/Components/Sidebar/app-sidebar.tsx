@@ -68,7 +68,7 @@ const items = [
 export function AppSidebar() {
   return (
     <TooltipProvider>
-      <Sidebar collapsible="icon">
+      <Sidebar variant="inset" collapsible="icon">
         <Header />
         <SidebarSeparator />
         <SidebarContent>
