@@ -1,6 +1,6 @@
 import { TableSchema } from "../types";
 
-export const TeacherSchema: TableSchema = {
+export const OtherStaffSchema: TableSchema = {
   styles: { maxHeight: "70vh", width: "93vw" },
   TableSchema: [
     {
@@ -73,6 +73,12 @@ export const TeacherSchema: TableSchema = {
       id: "qualification",
       accessorKey: "qualification",
       header: "Qualification",
+      size: 200,
+    },
+    {
+      id: "role",
+      accessorKey: "role",
+      header: "Role",
       size: 200,
     },
     {
