@@ -3,6 +3,7 @@ import MRTable from "../../components/MRTable";
 import AlertError from "@/components/Alerts/errorAlert";
 import { useEffect, useState } from "react";
 import { GET_ALL_CLASSES } from "@/APIs/ClassAPI/getAllClasses";
+import { ClassForm } from "./Form/ClassFrom";
 
 export default function Class() {
   const [classes, setClasses] = useState<JSON[] | null>(null);
@@ -27,6 +28,7 @@ export default function Class() {
     <div className="min-h-screen p-6 w-full text-black">
       <div className="flex items-center justify-between p-4">
         <h1 className="text-xl font-bold">Class Page</h1>
+        <ClassForm />
       </div>
       <div className="mt-4">
         <MRTable name="ClassTable" data={classes || []} loading={loading} />
