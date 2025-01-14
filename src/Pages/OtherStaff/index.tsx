@@ -20,7 +20,6 @@ export default function OtherStaff() {
       setOtherStaff(data.findAllStaffs);
     }
   }, [data, otherStaff]);
-  console.log(otherStaff);
 
   if (error) return <AlertError>{error.message}</AlertError>;
 
@@ -31,7 +30,7 @@ export default function OtherStaff() {
       </div>
       <div className="mt-4">
         <MRTable
-          name="TeacherTable"
+          name="OtherStaffTable"
           data={otherStaff || []}
           loading={loading}
         />
