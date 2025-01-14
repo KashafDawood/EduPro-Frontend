@@ -1,4 +1,11 @@
-import { Home, GraduationCap } from "lucide-react";
+import {
+  Home,
+  GraduationCap,
+  ReceiptText,
+  LibraryBig,
+  Presentation,
+  Users,
+} from "lucide-react";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { Link } from "react-router";
 import {
@@ -35,6 +42,26 @@ const items = [
     title: "Teacher",
     url: "/teacher",
     icon: FaChalkboardTeacher,
+  },
+  {
+    title: "Other Staff",
+    url: "/otherstaff",
+    icon: Users,
+  },
+  {
+    title: "Class",
+    url: "/class",
+    icon: Presentation,
+  },
+  {
+    title: "Subject",
+    url: "/subject",
+    icon: LibraryBig,
+  },
+  {
+    title: "Expense",
+    url: "/expense",
+    icon: ReceiptText,
   },
 ];
 
