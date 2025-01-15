@@ -25,11 +25,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ setError }) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
   const { setToken } = useUserStore();
-  const [login, { error: loginError, data: loginData }] =
+  const [login, { error: loginError, loading, data: loginData }] =
     useMutation(LOGIN_MUTATION);
 
   useEffect(() => {
@@ -90,11 +90,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ setError }) => {
         )}
       </div>
       <Button
-        disabled={isSubmitting}
+        disabled={loading}
         type="submit"
         className="w-full py-3 text-md font-semibold rounded-md bg-primary text-white"
       >
-        {isSubmitting ? "Loading..." : "Login"}
+        {loading ? "Loading..." : "Login"}
       </Button>
     </form>
   );
