@@ -29,7 +29,7 @@ export function UserSidebar() {
   const user = {
     name,
     email,
-    avatar: "https://avatar.iran.liara.run/public",
+    avatar: "https://avatar.iran.liara.run/public/49",
   };
 
   const handleLogout = async () => {
