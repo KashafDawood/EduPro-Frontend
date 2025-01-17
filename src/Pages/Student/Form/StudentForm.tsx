@@ -1,20 +1,9 @@
-import { CommonForm } from "@/components/CommonForm";
-import { useForm } from "react-hook-form";
+import { CommonForm } from "@/components/CommonForm/CommonForm";
 
 export const StudentForm = () => {
-  const { control, watch, getValues, setValue, reset } = useForm();
-  return (
-    <CommonForm
-      formName={"studentForm"}
-      buttonStyle={"!ml-[-100px]"}
-      buttonText={"Add Student"}
-      control={control}
-      watch={watch}
-      reset={reset}
-      getValues={getValues}
-      setValue={setValue}
-      handleSubmit={() => {}}
-      formLabel={"Student Form"}
-    />
-  );
+  const handleSubmit = (data: any) => {
+    console.log("Form Data:", data);
+  };
+
+  return <CommonForm formName="StudentForm" onSubmit={handleSubmit} />;
 };

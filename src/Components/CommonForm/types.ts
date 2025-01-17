@@ -1,18 +1,9 @@
-import { TextFieldProps } from "@mui/material";
-import {
-  FieldValues,
-  UseFormGetValues,
-  UseFormSetValue,
-} from "react-hook-form";
-
-export interface TextFieldItem extends Omit<TextFieldProps, "name"> {
+export interface FormFieldSchema {
   name: string;
   label: string;
+  type?: "text" | "number" | "date" | "select";
+  options?: string[];
   required?: boolean;
 }
 
-export type FormFieldSchema = TextFieldItem;
-export type FormSchema = (
-  getValues: UseFormGetValues<FieldValues>,
-  setValue: UseFormSetValue<FieldValues>
-) => TextFieldItem[];
+export type FormSchema = () => FormFieldSchema[];
