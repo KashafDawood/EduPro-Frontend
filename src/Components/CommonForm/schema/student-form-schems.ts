@@ -1,4 +1,4 @@
-import { FormFieldSchema, FormSchema } from "../types";
+import { FormFieldSchema, FormSchema } from "../types1";
 
 export const studentForm: FormSchema = (): FormFieldSchema[] => {
   return [
