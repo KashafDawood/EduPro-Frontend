@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 import AlertError from "@/components/Alerts/errorAlert";
 import { useMutation } from "@apollo/client/react/hooks";
+import { Loader2 } from "lucide-react";
 
 const schema = z.object({
   email: z.string().email(),
@@ -51,6 +52,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setError }) => {
 
   const onSubmit: SubmitHandler<FormFields> = (formData) => {
     try {
+      setError(null);
       login({ variables: formData });
     } catch (error) {
       setError(
@@ -94,6 +96,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setError }) => {
         type="submit"
         className="w-full py-3 text-md font-semibold rounded-md bg-primary text-white"
       >
+        {loading && <Loader2 className="animate-spin" />}
         {loading ? "Loading..." : "Login"}
       </Button>
     </form>
