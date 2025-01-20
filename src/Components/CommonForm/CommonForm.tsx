@@ -1,7 +1,5 @@
-import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -9,24 +7,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { DatePicker } from "../ui/datepicker";
 import { FORMS } from "./schema";
 import { Slideout } from "./Slideout";
-import { format } from "date-fns";
+import { useEffect } from "react";
+import { useQuery } from "@apollo/client/react/hooks";
+import { FormFieldSchema } from "./types";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
 }
 
 export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
-  const { control, handleSubmit } = useForm();
-  const formSchema = FORMS[formName]();
+  const { control, handleSubmit, getValues, setValue } = useForm();
+  const formSchema = FORMS[formName](getValues, setValue);
+
+  const fetchSchema = formSchema.find(
+    (field: FormFieldSchema) => field.type === "fetch" && field.query
+  );
+
+  const { data, error } = useQuery(fetchSchema?.query, {
+    skip: !fetchSchema?.query,
+  });
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+    if (error) {
+      console.error("Error fetching classes:", error);
+    }
+  }, [data, error]);
 
   const onSubmit = (data: any) => {
     console.log("Form Data:", data);
@@ -39,7 +50,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
       handleSubmit={handleSubmit(onSubmit)}
     >
       <form className="space-y-4">
-        {formSchema.map((field) => (
+        {formSchema.map((field: FormFieldSchema) => (
           <div key={field.name}>
             <Controller
               control={control}
@@ -54,11 +65,12 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
                           <SelectValue placeholder={field.label} />
                         </SelectTrigger>
                         <SelectContent>
-                          {field.options?.map((option) => (
-                            <SelectItem key={option} value={option}>
-                              {option}
-                            </SelectItem>
-                          ))}
+                          {"options" in field &&
+                            field.options?.map((option: string) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
                         </SelectContent>
                       </Select>
                     );
@@ -81,29 +93,14 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
 
                   case "date":
                     return (
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-full justify-start text-left font-normal",
-                              !value && "text-muted-foreground"
-                            )}
-                          >
-                            {value ? format(value, "PPP") : field.label}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0">
-                          <Calendar
-                            mode="single"
-                            selected={value}
-                            onSelect={onChange}
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <DatePicker
+                        selected={value}
+                        onSelect={onChange}
+                        placeholder="Pick a date"
+                      />
                     );
 
-                  default:
+                  case "text":
                     return (
                       <Input
                         type="text"
@@ -112,6 +109,9 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
                         placeholder={field.label}
                       />
                     );
+
+                  default:
+                    return <></>;
                 }
               }}
             />
