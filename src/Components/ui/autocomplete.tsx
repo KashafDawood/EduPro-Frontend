@@ -1,49 +1,83 @@
-import React, { useState } from "react";
+"use client";
+
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
-  CommandInput,
-  CommandList,
   CommandEmpty,
+  CommandGroup,
+  CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
-interface AutocompleteProps {
-  options: string[];
-  placeholder?: string;
-  onSelect: (value: string) => void;
+interface Option {
+  id: string;
+  name: string;
 }
 
-export const Autocomplete: React.FC<AutocompleteProps> = ({
+export function Autocomplete({
   options,
-  placeholder,
-  onSelect,
-}) => {
-  const [query, setQuery] = useState("");
-
-  const filteredOptions = options.filter((option) =>
-    option.toLowerCase().includes(query.toLowerCase())
-  );
+  value,
+  onChange,
+}: {
+  options: Option[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const [open, setOpen] = React.useState(false);
 
   return (
-    <Command>
-      {/* Input Field */}
-      <CommandInput
-        placeholder={placeholder || "Search..."}
-        onValueChange={(value) => setQuery(value)}
-      />
-
-      {/* List of Filtered Options */}
-      <CommandList>
-        {filteredOptions.length > 0 ? (
-          filteredOptions.map((option) => (
-            <CommandItem key={option} onSelect={() => onSelect(option)}>
-              {option}
-            </CommandItem>
-          ))
-        ) : (
-          <CommandEmpty>No results found.</CommandEmpty>
-        )}
-      </CommandList>
-    </Command>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-[200px] justify-between"
+        >
+          {value
+            ? options.find((option) => option.id === value)?.name
+            : "Search..."}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0">
+        <Command>
+          <CommandInput placeholder="Search options..." />
+          <CommandList>
+            <CommandEmpty>No options found.</CommandEmpty>
+            <CommandGroup>
+              {options.map((option) => (
+                <CommandItem
+                  key={option.id}
+                  value={option.id}
+                  onSelect={(currentValue) => {
+                    onChange(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === option.id ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {option.name}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
-};
+}

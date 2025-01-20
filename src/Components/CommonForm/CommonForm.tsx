@@ -22,6 +22,7 @@ interface CommonFormProps {
 interface autoOptionType {
   _id: string;
   name: string;
+  section: string;
 }
 
 export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
@@ -40,7 +41,10 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
       fetchData();
       if (data) {
         const [key] = Object.keys(data);
-        return data[key]?.map((item: autoOptionType) => item.name);
+        return data[key]?.map((item: autoOptionType) => ({
+          id: item._id,
+          name: item.name + " " + item.section,
+        }));
       }
     }
     return [];
@@ -87,7 +91,8 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
                     return (
                       <Autocomplete
                         options={extractedData}
-                        onSelect={onChange}
+                        value={value}
+                        onChange={onChange}
                       />
                     );
 
