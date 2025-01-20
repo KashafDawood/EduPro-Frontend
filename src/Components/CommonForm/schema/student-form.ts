@@ -15,8 +15,7 @@ export const StudentForm: FormSchema = () => [
   {
     name: "class",
     label: "Class",
-    type: "select",
-    options: ["Class 1", "Class 2", "Class 3"],
+    type: "autoComplete",
   },
   { name: "guardianPhone", label: "Guardian Phone", type: "text" },
 ];

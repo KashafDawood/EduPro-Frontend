@@ -10,34 +10,41 @@ import {
 import { DatePicker } from "../ui/datepicker";
 import { FORMS } from "./schema";
 import { Slideout } from "./Slideout";
-import { useEffect } from "react";
-import { useQuery } from "@apollo/client/react/hooks";
+import { useMemo, useState } from "react";
+import { useLazyQuery } from "@apollo/client/react/hooks";
 import { FormFieldSchema } from "./types";
+import { Autocomplete } from "../ui/autocomplete";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
 }
 
+interface autoOptionType {
+  _id: string;
+  name: string;
+}
+
 export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
   const { control, handleSubmit, getValues, setValue } = useForm();
   const formSchema = FORMS[formName](getValues, setValue);
+  const [isOpen, setIsOpen] = useState(false);
 
   const fetchSchema = formSchema.find(
     (field: FormFieldSchema) => field.type === "fetch" && field.query
   );
 
-  const { data, error } = useQuery(fetchSchema?.query, {
-    skip: !fetchSchema?.query,
-  });
+  const [fetchData, { data }] = useLazyQuery(fetchSchema?.query);
 
-  useEffect(() => {
-    if (data) {
-      console.log(data);
+  const extractedData = useMemo(() => {
+    if (isOpen) {
+      fetchData();
+      if (data) {
+        const [key] = Object.keys(data);
+        return data[key]?.map((item: autoOptionType) => item.name);
+      }
     }
-    if (error) {
-      console.error("Error fetching classes:", error);
-    }
-  }, [data, error]);
+    return [];
+  }, [data, isOpen, fetchData]);
 
   const onSubmit = (data: any) => {
     console.log("Form Data:", data);
@@ -48,6 +55,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
       formTitle="Add Student"
       buttonLabel="Open Form"
       handleSubmit={handleSubmit(onSubmit)}
+      handleIsOpen={setIsOpen}
     >
       <form className="space-y-4">
         {formSchema.map((field: FormFieldSchema) => (
@@ -75,21 +83,13 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
                       </Select>
                     );
 
-                  // case "multi-select":
-                  //   return (
-                  //     <Select onValueChange={(newValue) => onChange(newValue)} value={value} multiple>
-                  //       <SelectTrigger>
-                  //         <SelectValue placeholder={field.label} />
-                  //       </SelectTrigger>
-                  //       <SelectContent>
-                  //         {field.options?.map((option) => (
-                  //           <SelectItem key={option} value={option}>
-                  //             {option}
-                  //           </SelectItem>
-                  //         ))}
-                  //       </SelectContent>
-                  //     </Select>
-                  //   );
+                  case "autoComplete":
+                    return (
+                      <Autocomplete
+                        options={extractedData}
+                        onSelect={onChange}
+                      />
+                    );
 
                   case "date":
                     return (
