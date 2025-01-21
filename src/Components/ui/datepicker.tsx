@@ -5,9 +5,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
@@ -27,8 +26,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline">
-          {selected ? format(selected, "PPP") : placeholder || "Pick a date"}
+        <Button variant="outline" className="w-full justify-between">
+          {selected
+            ? `${placeholder} : ${format(selected, "PPP")}`
+            : placeholder || "Pick a date"}
           <CalendarIcon className="ml-2 h-4 w-4" />
         </Button>
       </PopoverTrigger>

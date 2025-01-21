@@ -102,6 +102,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                       <Autocomplete
                         options={extractedData}
                         value={value}
+                        placeholder={field.label ?? ""}
                         onChange={onChange}
                       />
                     );
@@ -111,7 +112,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                       <DatePicker
                         selected={value}
                         onSelect={onChange}
-                        placeholder="Pick a date"
+                        placeholder={field.label}
                       />
                     );
 

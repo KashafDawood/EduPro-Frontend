@@ -27,10 +27,12 @@ interface Option {
 export function Autocomplete({
   options,
   value,
+  placeholder,
   onChange,
 }: {
   options: Option[];
   value: string;
+  placeholder: string;
   onChange: (value: string) => void;
 }) {
   const [open, setOpen] = React.useState(false);
@@ -42,10 +44,12 @@ export function Autocomplete({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-full justify-between"
         >
           {value
             ? options.find((option) => option.id === value)?.name
+            : placeholder
+            ? `${placeholder}...`
             : "Search..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
