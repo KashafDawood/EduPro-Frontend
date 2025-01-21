@@ -2,7 +2,7 @@ import { GET_ALL_CLASSES } from "@/APIs/ClassAPI/getAllClasses";
 import { FormSchema } from "../types";
 
 export const StudentForm: FormSchema = () => [
-  { name: "fetch", type: "fetch", query: GET_ALL_CLASSES },
+  { name: "fetch", type: "fetch", query: GET_ALL_CLASSES, optional: "section" },
   { name: "studentName", label: "Student Name", type: "text", required: true },
   { name: "studentCNIC", label: "Student CNIC", type: "text" },
   {

@@ -17,24 +17,29 @@ import { Autocomplete } from "../ui/autocomplete";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
+  formTitle: string;
+  buttonLabel: string;
 }
 
 interface autoOptionType {
   _id: string;
   name: string;
-  section: string;
 }
 
-export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
+export const CommonForm: React.FC<CommonFormProps> = ({
+  formName,
+  formTitle,
+  buttonLabel,
+}) => {
   const { control, handleSubmit, getValues, setValue } = useForm();
   const formSchema = FORMS[formName](getValues, setValue);
   const [isOpen, setIsOpen] = useState(false);
 
-  const fetchSchema = formSchema.find(
-    (field: FormFieldSchema) => field.type === "fetch" && field.query
+  const { query, optional } = formSchema.find(
+    (field: FormFieldSchema) => field.type === "fetch"
   );
 
-  const [fetchData, { data }] = useLazyQuery(fetchSchema?.query);
+  const [fetchData, { data }] = useLazyQuery(query);
 
   const extractedData = useMemo(() => {
     if (isOpen) {
@@ -43,12 +48,17 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
         const [key] = Object.keys(data);
         return data[key]?.map((item: autoOptionType) => ({
           id: item._id,
-          name: item.name + " " + item.section,
+          name:
+            item.name +
+            " " +
+            (item[optional as keyof autoOptionType]
+              ? `${item[optional as keyof autoOptionType]}`
+              : ""),
         }));
       }
     }
     return [];
-  }, [data, isOpen, fetchData]);
+  }, [data, isOpen, fetchData, optional]);
 
   const onSubmit = (data: any) => {
     console.log("Form Data:", data);
@@ -56,8 +66,8 @@ export const CommonForm: React.FC<CommonFormProps> = ({ formName }) => {
 
   return (
     <Slideout
-      formTitle="Add Student"
-      buttonLabel="Open Form"
+      formTitle={formTitle}
+      buttonLabel={buttonLabel}
       handleSubmit={handleSubmit(onSubmit)}
       handleIsOpen={setIsOpen}
     >
