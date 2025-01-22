@@ -1,18 +1,20 @@
-import { TextFieldProps } from "@mui/material";
-import {
-  FieldValues,
-  UseFormGetValues,
-  UseFormSetValue,
-} from "react-hook-form";
+import { DocumentNode } from "graphql";
 
-export interface TextFieldItem extends Omit<TextFieldProps, "name"> {
+export interface FormFieldSchema {
   name: string;
-  label: string;
+  label?: string;
+  type?:
+    | "text"
+    | "number"
+    | "date"
+    | "select"
+    | "fetch"
+    | "autoComplete"
+    | "multiselect";
+  optional?: string;
+  options?: string[];
   required?: boolean;
+  query?: DocumentNode;
 }
 
-export type FormFieldSchema = TextFieldItem;
-export type FormSchema = (
-  getValues: UseFormGetValues<FieldValues>,
-  setValue: UseFormSetValue<FieldValues>
-) => TextFieldItem[];
+export type FormSchema = () => FormFieldSchema[];

@@ -1,6 +1,5 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-
 import {
   Sheet,
   SheetClose,
@@ -10,50 +9,36 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { FieldValues, UseFormReset } from "react-hook-form";
 
 interface SlideoutProps {
   formTitle: string;
   buttonLabel: string;
-  buttonStyle: string;
+  buttonStyle?: string;
   handleSubmit: () => void;
   children: ReactNode;
-  reset: UseFormReset<FieldValues>;
 }
 
 export const Slideout: React.FC<SlideoutProps> = ({
   formTitle,
   buttonLabel,
-  handleSubmit,
   buttonStyle,
+  handleSubmit,
   children,
-  reset,
 }) => {
-  useEffect(() => {
-    return () => {
-      reset();
-    };
-  }, [reset]);
-
   return (
     <Sheet>
-      {/* Trigger Button */}
-      <SheetTrigger className={`${buttonStyle}`} asChild>
+      <SheetTrigger className={buttonStyle} asChild>
         <Button variant="outline">{buttonLabel}</Button>
       </SheetTrigger>
 
-      {/* Slideout Content */}
-      <SheetContent className="overflow-scroll">
-        {/* Header */}
+      <SheetContent className="overflow-scroll p-6">
         <SheetHeader>
           <SheetTitle>{formTitle}</SheetTitle>
         </SheetHeader>
 
-        {/* Content */}
         <div className="mt-4">{children}</div>
 
-        {/* Footer */}
-        <SheetFooter>
+        <SheetFooter className="mt-6">
           <SheetClose asChild>
             <Button onClick={handleSubmit}>Save changes</Button>
           </SheetClose>
