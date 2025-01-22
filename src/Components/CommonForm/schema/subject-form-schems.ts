@@ -1,10 +1,12 @@
-import { FormFieldSchema, FormSchema } from "../types1";
+import { FormSchema } from "../types";
 
-export const subjectForm: FormSchema = (): FormFieldSchema[] => {
+export const subjectForm: FormSchema = () => {
   return [
     {
       name: "name",
       label: "Name",
+      type: "text",
+      required: true,
     },
     {
       name: "marks",
