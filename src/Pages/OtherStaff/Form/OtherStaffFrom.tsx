@@ -1,4 +1,4 @@
-import { CommonForm } from "@/components/CommonForm/CommonForm";
+import { CommonForm } from "@/components/CommonForm";
 
 export const OtherStaffForm = () => {
   const onSubmit = (data: Record<string, string | number | Date | null>) => {
