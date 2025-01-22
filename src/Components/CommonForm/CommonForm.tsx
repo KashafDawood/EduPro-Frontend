@@ -12,9 +12,8 @@ import { FORMS } from "./schema";
 import { Slideout } from "./Slideout";
 import { useState } from "react";
 import { FormFieldSchema } from "./types";
-import { Autocomplete } from "../ui/autocomplete";
-import useFetchData from "@/hooks/useFetch";
-import MultipleSelector from "../ui/multiselect";
+import AsyncAutocomplete from "../Custom/autocomplete";
+import { DocumentNode } from "graphql";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -31,41 +30,41 @@ export const CommonForm: React.FC<CommonFormProps> = ({
   const formSchema = FORMS[formName](getValues, setValue);
   const [isOpen, setIsOpen] = useState(false);
 
-  const queryObj = formSchema.filter(
-    (field: FormFieldSchema) => field.name === "fetch"
-  );
+  // const queryObj = formSchema.filter(
+  //   (field: FormFieldSchema) => field.name === "fetch"
+  // );
 
-  const querydata = queryObj.map((item, index: number) => ({
-    name: item.label,
-    data: useFetchData(item.query, item.optional, isOpen),
-    key: `${item.label}-${index}`,
-  }));
+  // const querydata = queryObj.map((item, index: number) => ({
+  //   name: item.label,
+  //   data: useFetchData(item.query, item.optional, isOpen),
+  //   key: `${item.label}-${index}`,
+  // }));
 
-  const autocompleteOptions = querydata.filter(
-    (item) => item.name === "fetchAutocomplete"
-  );
+  // const autocompleteOptions = querydata.filter(
+  //   (item) => item.name === "fetchAutocomplete"
+  // );
 
-  const multiselectOptions = querydata.filter(
-    (item) => item.name === "fetchMultiselect"
-  );
+  // const multiselectOptions = querydata.filter(
+  //   (item) => item.name === "fetchMultiselect"
+  // );
 
-  const OPTIONS: Option[] = [
-    { label: "nextjs", value: "nextjs" },
-    { label: "React", value: "react" },
-    { label: "Remix", value: "remix" },
-    { label: "Vite", value: "vite" },
-    { label: "Nuxt", value: "nuxt" },
-    { label: "Vue", value: "vue" },
-    { label: "Svelte", value: "svelte" },
-    { label: "Angular", value: "angular" },
-    { label: "Ember", value: "ember", disable: true },
-    { label: "Gatsby", value: "gatsby", disable: true },
-    { label: "Astro", value: "astro" },
-  ];
+  // const OPTIONS: Option[] = [
+  //   { label: "nextjs", value: "nextjs" },
+  //   { label: "React", value: "react" },
+  //   { label: "Remix", value: "remix" },
+  //   { label: "Vite", value: "vite" },
+  //   { label: "Nuxt", value: "nuxt" },
+  //   { label: "Vue", value: "vue" },
+  //   { label: "Svelte", value: "svelte" },
+  //   { label: "Angular", value: "angular" },
+  //   { label: "Ember", value: "ember", disable: true },
+  //   { label: "Gatsby", value: "gatsby", disable: true },
+  //   { label: "Astro", value: "astro" },
+  // ];
 
-  console.log(multiselectOptions);
+  // console.log(multiselectOptions);
 
-  // const data = useFetchData(query, optional);
+  // // const data = useFetchData(query, optional);
 
   const onSubmit = (data: any) => {
     console.log("Form Data:", data);
@@ -106,35 +105,31 @@ export const CommonForm: React.FC<CommonFormProps> = ({
 
                   case "autoComplete":
                     return (
-                      <>
-                        {autocompleteOptions.map((item) => (
-                          <Autocomplete
-                            key={item.key}
-                            options={item.data}
-                            value={value}
-                            placeholder={`Select ${field.label} ...`}
-                            onChange={onChange}
-                          />
-                        ))}
-                      </>
+                      <AsyncAutocomplete
+                        query={field.query as DocumentNode}
+                        optional={field.optional}
+                        value={value}
+                        placeholder={`Select ${field.label} ...`}
+                        onChange={onChange}
+                      />
                     );
 
-                  case "multiselect":
-                    return (
-                      <>
-                        {multiselectOptions.map((item) => (
-                          <MultipleSelector
-                            key={item.key}
-                            defaultOptions={item.data || OPTIONS}
-                            value={value || []}
-                            placeholder={`Select ${field.label} ...`}
-                            onChange={(selectedOptions) => {
-                              onChange(selectedOptions);
-                            }}
-                          />
-                        ))}
-                      </>
-                    );
+                  // case "multiselect":
+                  //   return (
+                  //     <>
+                  //       {multiselectOptions.map((item) => (
+                  //         <MultipleSelector
+                  //           key={item.key}
+                  //           defaultOptions={item.data || OPTIONS}
+                  //           value={value || []}
+                  //           placeholder={`Select ${field.label} ...`}
+                  //           onChange={(selectedOptions) => {
+                  //             onChange(selectedOptions);
+                  //           }}
+                  //         />
+                  //       ))}
+                  //     </>
+                  //   );
 
                   case "date":
                     return (

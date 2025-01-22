@@ -1,10 +1,7 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  createHttpLink,
-  ApolloLink,
-} from "@apollo/client";
+import { createHttpLink } from "@apollo/client/link/http";
 import { setContext } from "@apollo/client/link/context";
+import { ApolloLink } from "@apollo/client/link/core";
+import { ApolloClient, InMemoryCache } from "@apollo/client/core";
 // import { onError } from "@apollo/client/link/error";
 import { REFRESH_TOKEN } from "@/APIs/AuthAPI/refreshAccessToken";
 import { useUserStore } from "@/store/userStore";
