@@ -14,6 +14,7 @@ import { useState } from "react";
 import { FormFieldSchema } from "./types";
 import AsyncAutocomplete from "../Custom/autocomplete";
 import { DocumentNode } from "graphql";
+import AsyncMultiselect from "../Custom/multiselect";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -47,20 +48,6 @@ export const CommonForm: React.FC<CommonFormProps> = ({
   // const multiselectOptions = querydata.filter(
   //   (item) => item.name === "fetchMultiselect"
   // );
-
-  // const OPTIONS: Option[] = [
-  //   { label: "nextjs", value: "nextjs" },
-  //   { label: "React", value: "react" },
-  //   { label: "Remix", value: "remix" },
-  //   { label: "Vite", value: "vite" },
-  //   { label: "Nuxt", value: "nuxt" },
-  //   { label: "Vue", value: "vue" },
-  //   { label: "Svelte", value: "svelte" },
-  //   { label: "Angular", value: "angular" },
-  //   { label: "Ember", value: "ember", disable: true },
-  //   { label: "Gatsby", value: "gatsby", disable: true },
-  //   { label: "Astro", value: "astro" },
-  // ];
 
   // console.log(multiselectOptions);
 
@@ -107,29 +94,24 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                     return (
                       <AsyncAutocomplete
                         query={field.query as DocumentNode}
-                        optional={field.optional}
+                        optional={field.optional as string}
                         value={value}
                         placeholder={`Select ${field.label} ...`}
                         onChange={onChange}
                       />
                     );
 
-                  // case "multiselect":
-                  //   return (
-                  //     <>
-                  //       {multiselectOptions.map((item) => (
-                  //         <MultipleSelector
-                  //           key={item.key}
-                  //           defaultOptions={item.data || OPTIONS}
-                  //           value={value || []}
-                  //           placeholder={`Select ${field.label} ...`}
-                  //           onChange={(selectedOptions) => {
-                  //             onChange(selectedOptions);
-                  //           }}
-                  //         />
-                  //       ))}
-                  //     </>
-                  //   );
+                  case "multiselect":
+                    return (
+                      <AsyncMultiselect
+                        query={field.query as DocumentNode}
+                        value={value || []}
+                        placeholder={`Select ${field.label} ...`}
+                        onChange={(selectedOptions) => {
+                          onChange(selectedOptions);
+                        }}
+                      />
+                    );
 
                   case "date":
                     return (

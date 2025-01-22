@@ -45,7 +45,7 @@ export const StudentForm: FormSchema = () => [
   {
     name: "subject",
     label: "Subject",
-    type: "autoComplete",
+    type: "multiselect",
     query: GET_ALL_SUBJECT,
   },
 ];
