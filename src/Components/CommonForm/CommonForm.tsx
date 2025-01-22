@@ -103,6 +103,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                     return (
                       <AsyncMultiselect
                         query={field.query as DocumentNode}
+                        optional={field.optional as string}
                         value={value || []}
                         placeholder={`Select ${field.label} ...`}
                         onChange={(selectedOptions) => {

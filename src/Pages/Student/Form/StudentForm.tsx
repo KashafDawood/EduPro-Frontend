@@ -7,7 +7,7 @@ export const StudentForm = () => {
 
   return (
     <CommonForm
-      formName="StudentForm"
+      formName="studentForm"
       formTitle="Student Form"
       buttonLabel="Add Student"
       onSubmit={onSubmit}
