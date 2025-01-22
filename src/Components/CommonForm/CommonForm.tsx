@@ -10,11 +10,12 @@ import {
 import { DatePicker } from "../ui/datepicker";
 import { FORMS } from "./schema";
 import { Slideout } from "./Slideout";
-import { useState } from "react";
 import { FormFieldSchema } from "./types";
 import AsyncAutocomplete from "../Custom/autocomplete";
 import { DocumentNode } from "graphql";
 import AsyncMultiselect from "../Custom/multiselect";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { generateZodSchema, transformFormData } from "./commonForm-helper";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -27,34 +28,24 @@ export const CommonForm: React.FC<CommonFormProps> = ({
   formTitle,
   buttonLabel,
 }) => {
-  const { control, handleSubmit, getValues, setValue } = useForm();
-  const formSchema = FORMS[formName](getValues, setValue);
-  const [isOpen, setIsOpen] = useState(false);
-
-  // const queryObj = formSchema.filter(
-  //   (field: FormFieldSchema) => field.name === "fetch"
-  // );
-
-  // const querydata = queryObj.map((item, index: number) => ({
-  //   name: item.label,
-  //   data: useFetchData(item.query, item.optional, isOpen),
-  //   key: `${item.label}-${index}`,
-  // }));
-
-  // const autocompleteOptions = querydata.filter(
-  //   (item) => item.name === "fetchAutocomplete"
-  // );
-
-  // const multiselectOptions = querydata.filter(
-  //   (item) => item.name === "fetchMultiselect"
-  // );
-
-  // console.log(multiselectOptions);
-
-  // // const data = useFetchData(query, optional);
+  const formSchema = FORMS[formName]();
+  const zodSchema = generateZodSchema(formSchema);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(zodSchema),
+    defaultValues: formSchema.reduce((defaults, field) => {
+      defaults[field.name] = field.type === "date" ? null : "";
+      return defaults;
+    }, {} as Record<string, any>),
+  });
 
   const onSubmit = (data: any) => {
-    console.log("Form Data:", data);
+    const transformedData = transformFormData(data, formSchema);
+    console.log("Transformed Form Data:", transformedData);
+    // Perform further actions with transformedData
   };
 
   return (
@@ -62,7 +53,6 @@ export const CommonForm: React.FC<CommonFormProps> = ({
       formTitle={formTitle}
       buttonLabel={buttonLabel}
       handleSubmit={handleSubmit(onSubmit)}
-      handleIsOpen={setIsOpen}
     >
       <form className="space-y-4">
         {formSchema.map((field: FormFieldSchema, index: number) => (
@@ -70,7 +60,6 @@ export const CommonForm: React.FC<CommonFormProps> = ({
             <Controller
               control={control}
               name={field.name}
-              rules={{ required: field.required }}
               render={({ field: { value, onChange } }) => {
                 switch (field.type) {
                   case "select":
@@ -147,6 +136,11 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                 }
               }}
             />
+            {errors[field.name] && (
+              <p className="text-red-500 text-sm">
+                {errors[field.name]?.message}
+              </p>
+            )}
           </div>
         ))}
       </form>

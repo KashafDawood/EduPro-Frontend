@@ -15,7 +15,6 @@ interface SlideoutProps {
   buttonLabel: string;
   buttonStyle?: string;
   handleSubmit: () => void;
-  handleIsOpen: (isOpen: boolean) => void;
   children: ReactNode;
 }
 
@@ -24,15 +23,12 @@ export const Slideout: React.FC<SlideoutProps> = ({
   buttonLabel,
   buttonStyle,
   handleSubmit,
-  handleIsOpen,
   children,
 }) => {
   return (
     <Sheet>
       <SheetTrigger className={buttonStyle} asChild>
-        <Button onClick={() => handleIsOpen(true)} variant="outline">
-          {buttonLabel}
-        </Button>
+        <Button variant="outline">{buttonLabel}</Button>
       </SheetTrigger>
 
       <SheetContent className="overflow-scroll p-6">
