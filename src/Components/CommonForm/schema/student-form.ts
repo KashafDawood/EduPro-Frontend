@@ -9,7 +9,7 @@ export const StudentForm: FormSchema = () => [
     query: GET_ALL_CLASSES,
     optional: "section",
   },
-  { name: "fetch", label: "fetchAutocomplete", query: GET_ALL_SUBJECT },
+  { name: "fetch", label: "fetchMultiselect", query: GET_ALL_SUBJECT },
   { name: "studentName", label: "Student Name", type: "text", required: true },
   { name: "studentCNIC", label: "Student CNIC", type: "text" },
   {
@@ -50,6 +50,6 @@ export const StudentForm: FormSchema = () => [
   {
     name: "subject",
     label: "Subject",
-    type: "autoComplete",
+    type: "multiselect",
   },
 ];

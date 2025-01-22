@@ -3,7 +3,14 @@ import { DocumentNode } from "graphql";
 export interface FormFieldSchema {
   name: string;
   label?: string;
-  type?: "text" | "number" | "date" | "select" | "fetch" | "autoComplete";
+  type?:
+    | "text"
+    | "number"
+    | "date"
+    | "select"
+    | "fetch"
+    | "autoComplete"
+    | "multiselect";
   optional?: string;
   options?: string[];
   required?: boolean;

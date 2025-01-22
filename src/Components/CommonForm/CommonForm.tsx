@@ -14,6 +14,7 @@ import { useState } from "react";
 import { FormFieldSchema } from "./types";
 import { Autocomplete } from "../ui/autocomplete";
 import useFetchData from "@/hooks/useFetch";
+import MultipleSelector from "../ui/multiselect";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -39,9 +40,30 @@ export const CommonForm: React.FC<CommonFormProps> = ({
     data: useFetchData(item.query, item.optional, isOpen),
     key: `${item.label}-${index}`,
   }));
+
   const autocompleteOptions = querydata.filter(
     (item) => item.name === "fetchAutocomplete"
   );
+
+  const multiselectOptions = querydata.filter(
+    (item) => item.name === "fetchMultiselect"
+  );
+
+  const OPTIONS: Option[] = [
+    { label: "nextjs", value: "nextjs" },
+    { label: "React", value: "react" },
+    { label: "Remix", value: "remix" },
+    { label: "Vite", value: "vite" },
+    { label: "Nuxt", value: "nuxt" },
+    { label: "Vue", value: "vue" },
+    { label: "Svelte", value: "svelte" },
+    { label: "Angular", value: "angular" },
+    { label: "Ember", value: "ember", disable: true },
+    { label: "Gatsby", value: "gatsby", disable: true },
+    { label: "Astro", value: "astro" },
+  ];
+
+  console.log(multiselectOptions);
 
   // const data = useFetchData(query, optional);
 
@@ -90,8 +112,25 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                             key={item.key}
                             options={item.data}
                             value={value}
-                            placeholder={field.label ?? ""}
+                            placeholder={`Select ${field.label} ...`}
                             onChange={onChange}
+                          />
+                        ))}
+                      </>
+                    );
+
+                  case "multiselect":
+                    return (
+                      <>
+                        {multiselectOptions.map((item) => (
+                          <MultipleSelector
+                            key={item.key}
+                            defaultOptions={item.data || OPTIONS}
+                            value={value || []}
+                            placeholder={`Select ${field.label} ...`}
+                            onChange={(selectedOptions) => {
+                              onChange(selectedOptions);
+                            }}
                           />
                         ))}
                       </>
