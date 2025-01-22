@@ -3,8 +3,13 @@ import { FormSchema } from "../types";
 import { GET_ALL_SUBJECT } from "@/APIs/SubjectAPI/getAllSubject";
 
 export const StudentForm: FormSchema = () => [
-  { name: "fetch", type: "fetch", query: GET_ALL_CLASSES, optional: "section" },
-  { name: "fetch", type: "fetch", query: GET_ALL_SUBJECT },
+  {
+    name: "fetch",
+    label: "fetchAutocomplete",
+    query: GET_ALL_CLASSES,
+    optional: "section",
+  },
+  { name: "fetch", label: "fetchAutocomplete", query: GET_ALL_SUBJECT },
   { name: "studentName", label: "Student Name", type: "text", required: true },
   { name: "studentCNIC", label: "Student CNIC", type: "text" },
   {

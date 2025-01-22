@@ -11,9 +11,9 @@ import { DatePicker } from "../ui/datepicker";
 import { FORMS } from "./schema";
 import { Slideout } from "./Slideout";
 import { useMemo, useState } from "react";
-import { useLazyQuery } from "@apollo/client/react/hooks";
 import { FormFieldSchema } from "./types";
 import { Autocomplete } from "../ui/autocomplete";
+import useFetchData from "@/hooks/useFetch";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -35,30 +35,19 @@ export const CommonForm: React.FC<CommonFormProps> = ({
   const formSchema = FORMS[formName](getValues, setValue);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { query, optional } = formSchema.find(
-    (field: FormFieldSchema) => field.type === "fetch"
+  const queryObj = formSchema.filter(
+    (field: FormFieldSchema) => field.name === "fetch"
   );
 
-  const [fetchData, { data }] = useLazyQuery(query);
+  const querydata = queryObj.map((item) => ({
+    name: item.label,
+    data: useFetchData(item.query, item.optional, isOpen),
+  }));
+  const autocompleteOptions = querydata.filter(
+    (item) => item.name === "fetchAutocomplete"
+  );
 
-  const extractedData = useMemo(() => {
-    if (isOpen) {
-      fetchData();
-      if (data) {
-        const [key] = Object.keys(data);
-        return data[key]?.map((item: autoOptionType) => ({
-          id: item._id,
-          name:
-            item.name +
-            " " +
-            (item[optional as keyof autoOptionType]
-              ? `${item[optional as keyof autoOptionType]}`
-              : ""),
-        }));
-      }
-    }
-    return [];
-  }, [data, isOpen, fetchData, optional]);
+  // const data = useFetchData(query, optional);
 
   const onSubmit = (data: any) => {
     console.log("Form Data:", data);
@@ -99,12 +88,17 @@ export const CommonForm: React.FC<CommonFormProps> = ({
 
                   case "autoComplete":
                     return (
-                      <Autocomplete
-                        options={extractedData}
-                        value={value}
-                        placeholder={field.label ?? ""}
-                        onChange={onChange}
-                      />
+                      <>
+                        {autocompleteOptions.map((item) => (
+                          <Autocomplete
+                            key={item.name}
+                            options={item.data}
+                            value={value}
+                            placeholder={field.label ?? ""}
+                            onChange={onChange}
+                          />
+                        ))}
+                      </>
                     );
 
                   case "date":
@@ -120,6 +114,16 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                     return (
                       <Input
                         type="text"
+                        value={value}
+                        onChange={onChange}
+                        placeholder={field.label}
+                      />
+                    );
+
+                  case "number":
+                    return (
+                      <Input
+                        type="number"
                         value={value}
                         onChange={onChange}
                         placeholder={field.label}
