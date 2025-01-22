@@ -98,22 +98,24 @@ export function MultiSelect({
           </Command>
         </PopoverContent>
       </Popover>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {value.map((selectedId) => {
-          const selectedOption = options.find(
-            (option) => option.id === selectedId
-          );
-          return (
-            <Badge key={selectedId} variant="secondary">
-              {selectedOption?.name}
-              <X
-                className="ml-1 h-3 w-3 cursor-pointer"
-                onClick={() => handleSelect(selectedId)}
-              />
-            </Badge>
-          );
-        })}
-      </div>
+      {value.length > 0 && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {value.map((selectedId) => {
+            const selectedOption = options.find(
+              (option) => option.id === selectedId
+            );
+            return (
+              <Badge key={selectedId} variant="secondary">
+                {selectedOption?.name}
+                <X
+                  className="ml-1 h-3 w-3 cursor-pointer"
+                  onClick={() => handleSelect(selectedId)}
+                />
+              </Badge>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
