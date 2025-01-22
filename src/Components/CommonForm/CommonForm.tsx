@@ -10,7 +10,7 @@ import {
 import { DatePicker } from "../ui/datepicker";
 import { FORMS } from "./schema";
 import { Slideout } from "./Slideout";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { FormFieldSchema } from "./types";
 import { Autocomplete } from "../ui/autocomplete";
 import useFetchData from "@/hooks/useFetch";
@@ -19,11 +19,6 @@ interface CommonFormProps {
   formName: keyof typeof FORMS;
   formTitle: string;
   buttonLabel: string;
-}
-
-interface autoOptionType {
-  _id: string;
-  name: string;
 }
 
 export const CommonForm: React.FC<CommonFormProps> = ({
@@ -39,9 +34,10 @@ export const CommonForm: React.FC<CommonFormProps> = ({
     (field: FormFieldSchema) => field.name === "fetch"
   );
 
-  const querydata = queryObj.map((item) => ({
+  const querydata = queryObj.map((item, index: number) => ({
     name: item.label,
     data: useFetchData(item.query, item.optional, isOpen),
+    key: `${item.label}-${index}`,
   }));
   const autocompleteOptions = querydata.filter(
     (item) => item.name === "fetchAutocomplete"
@@ -61,8 +57,8 @@ export const CommonForm: React.FC<CommonFormProps> = ({
       handleIsOpen={setIsOpen}
     >
       <form className="space-y-4">
-        {formSchema.map((field: FormFieldSchema) => (
-          <div key={field.name}>
+        {formSchema.map((field: FormFieldSchema, index: number) => (
+          <div key={`${field.name}-${index}`}>
             <Controller
               control={control}
               name={field.name}
@@ -91,7 +87,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                       <>
                         {autocompleteOptions.map((item) => (
                           <Autocomplete
-                            key={item.name}
+                            key={item.key}
                             options={item.data}
                             value={value}
                             placeholder={field.label ?? ""}
