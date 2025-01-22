@@ -9,14 +9,20 @@ export const generateZodSchema = (formSchema: FormFieldSchema[]) => {
       case "text":
         fieldValidator = z.string();
         if (field.required) {
-          fieldValidator = fieldValidator.min(1, `${field.label} is required`);
+          fieldValidator = (fieldValidator as z.ZodString).min(
+            1,
+            `${field.label} is required`
+          );
         }
         break;
 
       case "number":
         fieldValidator = z.string();
         if (field.required) {
-          fieldValidator = fieldValidator.min(1, `${field.label} is required`);
+          fieldValidator = (fieldValidator as z.ZodString).min(
+            1,
+            `${field.label} is required`
+          );
         }
         break;
 
@@ -34,14 +40,20 @@ export const generateZodSchema = (formSchema: FormFieldSchema[]) => {
       case "select":
         fieldValidator = z.string();
         if (field.required) {
-          fieldValidator = fieldValidator.min(1, `${field.label} is required`);
+          fieldValidator = (fieldValidator as z.ZodString).min(
+            1,
+            `${field.label} is required`
+          );
         }
         break;
 
       case "multiselect":
         fieldValidator = z.array(z.string());
         if (field.required) {
-          fieldValidator = fieldValidator.min(1, `${field.label} is required`);
+          fieldValidator = (fieldValidator as z.ZodArray<z.ZodString>).min(
+            1,
+            `${field.label} is required`
+          );
         }
         break;
 
@@ -56,7 +68,7 @@ export const generateZodSchema = (formSchema: FormFieldSchema[]) => {
 };
 
 export const transformFormData = (
-  data: Record<string, any>,
+  data: Record<string, string | number | null>,
   formSchema: FormFieldSchema[]
 ) => {
   return Object.keys(data).reduce((transformedData, key) => {
@@ -71,7 +83,7 @@ export const transformFormData = (
 
       case "number":
         transformedData[key] = data[key]
-          ? parseFloat(data[key]) || parseInt(data[key], 10)
+          ? parseFloat(data[key] as string) || parseInt(data[key] as string, 10)
           : null;
         break;
 
@@ -80,5 +92,5 @@ export const transformFormData = (
     }
 
     return transformedData;
-  }, {} as Record<string, any>);
+  }, {} as Record<string, string | number | Date | null>);
 };

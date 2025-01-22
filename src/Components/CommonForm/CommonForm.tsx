@@ -21,38 +21,47 @@ interface CommonFormProps {
   formName: keyof typeof FORMS;
   formTitle: string;
   buttonLabel: string;
+  onSubmit: (data: Record<string, string | number | Date | null>) => void;
+}
+
+interface DefaultValues {
+  [key: string]: string | null;
 }
 
 export const CommonForm: React.FC<CommonFormProps> = ({
   formName,
   formTitle,
   buttonLabel,
+  onSubmit,
 }) => {
   const formSchema = FORMS[formName]();
   const zodSchema = generateZodSchema(formSchema);
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(zodSchema),
-    defaultValues: formSchema.reduce((defaults, field) => {
-      defaults[field.name] = field.type === "date" ? null : "";
-      return defaults;
-    }, {} as Record<string, any>),
+    defaultValues: formSchema.reduce(
+      (defaults: DefaultValues, field: FormFieldSchema) => {
+        defaults[field.name] = field.type === "date" ? null : "";
+        return defaults;
+      },
+      {} as DefaultValues
+    ),
   });
 
-  const onSubmit = (data: any) => {
+  const handleFormSubmit = (data: Record<string, string | number | null>) => {
     const transformedData = transformFormData(data, formSchema);
-    console.log("Transformed Form Data:", transformedData);
-    // Perform further actions with transformedData
+    onSubmit(transformedData);
   };
 
   return (
     <Slideout
       formTitle={formTitle}
       buttonLabel={buttonLabel}
-      handleSubmit={handleSubmit(onSubmit)}
+      handleSubmit={handleSubmit(handleFormSubmit)}
     >
       <form className="space-y-4">
         {formSchema.map((field: FormFieldSchema, index: number) => (
