@@ -1,6 +1,6 @@
-import { FormFieldSchema, FormSchema } from "../types1";
+import { FormSchema } from "../types";
 
-export const expenseForm: FormSchema = (): FormFieldSchema[] => {
+export const expenseForm: FormSchema = () => {
   return [
     {
       name: "salaries",

@@ -73,7 +73,10 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                 switch (field.type) {
                   case "select":
                     return (
-                      <Select onValueChange={onChange} value={value}>
+                      <Select
+                        onValueChange={onChange}
+                        value={value ?? undefined}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder={field.label} />
                         </SelectTrigger>
@@ -93,7 +96,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                       <AsyncAutocomplete
                         query={field.query as DocumentNode}
                         optional={field.optional as string}
-                        value={value}
+                        value={value ?? ""}
                         placeholder={`Select ${field.label} ...`}
                         onChange={onChange}
                       />
@@ -104,7 +107,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                       <AsyncMultiselect
                         query={field.query as DocumentNode}
                         optional={field.optional as string}
-                        value={value || []}
+                        value={Array.isArray(value) ? value : []}
                         placeholder={`Select ${field.label} ...`}
                         onChange={(selectedOptions) => {
                           onChange(selectedOptions);
@@ -115,7 +118,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                   case "date":
                     return (
                       <DatePicker
-                        selected={value}
+                        selected={value ? new Date(value) : undefined}
                         onSelect={onChange}
                         placeholder={field.label}
                       />
@@ -125,7 +128,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                     return (
                       <Input
                         type="text"
-                        value={value}
+                        value={value ?? ""}
                         onChange={onChange}
                         placeholder={field.label}
                       />
@@ -135,7 +138,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                     return (
                       <Input
                         type="number"
-                        value={value}
+                        value={value ?? ""}
                         onChange={onChange}
                         placeholder={field.label}
                       />
