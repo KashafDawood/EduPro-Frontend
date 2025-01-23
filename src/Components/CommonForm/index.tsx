@@ -16,6 +16,7 @@ import { DocumentNode } from "graphql";
 import AsyncMultiselect from "../Custom/multiselect";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { generateZodSchema, transformFormData } from "./commonForm-helper";
+import { useState } from "react";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -36,10 +37,12 @@ export const CommonForm: React.FC<CommonFormProps> = ({
 }) => {
   const formSchema = FORMS[formName]();
   const zodSchema = generateZodSchema(formSchema);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(zodSchema),
@@ -55,12 +58,16 @@ export const CommonForm: React.FC<CommonFormProps> = ({
   const handleFormSubmit = (data: Record<string, string | number | null>) => {
     const transformedData = transformFormData(data, formSchema);
     onSubmit(transformedData);
+    reset();
+    setIsSheetOpen(false);
   };
 
   return (
     <Slideout
       formTitle={formTitle}
       buttonLabel={buttonLabel}
+      isSheetOpen={isSheetOpen}
+      setIsSheetOpen={setIsSheetOpen}
       handleSubmit={handleSubmit(handleFormSubmit)}
     >
       <form className="space-y-4">

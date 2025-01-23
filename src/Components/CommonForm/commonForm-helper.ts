@@ -17,7 +17,7 @@ export const generateZodSchema = (formSchema: FormFieldSchema[]) => {
         break;
 
       case "number":
-        fieldValidator = z.string();
+        fieldValidator = z.string().nonempty(`${field.label} cannot be empty`);
         if (field.required) {
           fieldValidator = (fieldValidator as z.ZodString).min(
             1,
