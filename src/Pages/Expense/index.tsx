@@ -22,8 +22,6 @@ export default function Expense() {
     }
   }, [data]);
 
-  console.log(data, expenses);
-
   return (
     <>
       {error && <AlertError>{error.message}</AlertError>}
