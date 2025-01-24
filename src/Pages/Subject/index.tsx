@@ -17,7 +17,7 @@ export default function Subject() {
   }, [subjects, fetchSubjects]);
 
   useEffect(() => {
-    if (data?.findAllSubject && (!subjects || subjects.length === 0)) {
+    if (data?.findAllSubject) {
       setSubjects(data.findAllSubject);
     }
   }, [data, subjects]);
