@@ -12,7 +12,6 @@ export const classForm: FormSchema = () => {
       name: "section",
       label: "Section",
       type: "text",
-      required: true,
     },
   ];
 };

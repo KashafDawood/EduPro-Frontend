@@ -17,7 +17,7 @@ export default function Class() {
   }, [classes, fetchClasses]);
 
   useEffect(() => {
-    if (data?.findAllClasses && (!classes || classes.length === 0)) {
+    if (data?.findAllClasses) {
       setClasses(data.findAllClasses);
     }
   }, [data, classes]);
