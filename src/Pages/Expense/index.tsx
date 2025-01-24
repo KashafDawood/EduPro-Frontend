@@ -17,22 +17,29 @@ export default function Expense() {
   }, [expenses, fetchExpenses]);
 
   useEffect(() => {
-    if (data?.findAllExpenses && (!expenses || expenses.length === 0)) {
+    if (data?.findAllExpenses) {
       setExpenses(data.findAllExpenses);
     }
-  }, [data, expenses]);
+  }, [data]);
 
-  if (error) return <AlertError>{error.message}</AlertError>;
+  console.log(data, expenses);
 
   return (
-    <div className="min-h-screen p-6 w-full text-black">
-      <div className="flex items-center justify-between p-4">
-        <h1 className="text-xl font-bold">Expense Page</h1>
-        <ExpenseForm />
+    <>
+      {error && <AlertError>{error.message}</AlertError>}
+      <div className="min-h-screen p-6 w-full text-black">
+        <div className="flex items-center justify-between p-4">
+          <h1 className="text-xl font-bold">Expense Page</h1>
+          <ExpenseForm />
+        </div>
+        <div className="mt-4">
+          <MRTable
+            name="ExpenseTable"
+            data={expenses || []}
+            loading={loading}
+          />
+        </div>
       </div>
-      <div className="mt-4">
-        <MRTable name="ExpenseTable" data={expenses || []} loading={loading} />
-      </div>
-    </div>
+    </>
   );
 }

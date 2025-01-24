@@ -9,7 +9,11 @@ export const ExpenseForm = () => {
   );
 
   const onSubmit = (data: Record<string, string | number | Date | null>) => {
-    // createExpense({ variables: data });
+    createExpense({
+      variables: data,
+      refetchQueries: ["FindAllExpenses"],
+      awaitRefetchQueries: true,
+    });
   };
 
   return (
