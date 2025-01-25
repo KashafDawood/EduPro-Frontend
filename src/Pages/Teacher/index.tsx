@@ -17,7 +17,7 @@ export default function Teacher() {
   }, [teachers, fetchTeachers]);
 
   useEffect(() => {
-    if (data?.findAllTeachers && (!teachers || teachers.length === 0)) {
+    if (data?.findAllTeachers) {
       setTeachers(data.findAllTeachers);
     }
   }, [data, teachers]);

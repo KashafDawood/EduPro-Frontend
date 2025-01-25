@@ -11,15 +11,22 @@ export const teacherForm: FormSchema = () => {
       required: true,
     },
     {
+      name: "gender",
+      label: "Gender",
+      type: "select",
+      options: ["male", "female"],
+      required: true,
+    },
+    {
       name: "phone",
       label: "Phone",
-      type: "number",
+      type: "text",
       required: true,
     },
     {
       name: "guardianPhone",
       label: "Guardian Phone",
-      type: "number",
+      type: "text",
       required: true,
     },
     {
@@ -48,17 +55,17 @@ export const teacherForm: FormSchema = () => {
     {
       name: "CNIC",
       label: "CNIC",
-      type: "number",
+      type: "text",
       required: true,
     },
     {
       name: "guardianCNIC",
       label: "Guardian CNIC",
-      type: "number",
+      type: "text",
       required: true,
     },
     {
-      name: "Classes",
+      name: "Class",
       label: "Classes",
       type: "multiselect",
       query: GET_ALL_CLASSES,
@@ -66,7 +73,7 @@ export const teacherForm: FormSchema = () => {
       required: true,
     },
     {
-      name: "Subjects",
+      name: "Subject",
       label: "Subjects",
       type: "multiselect",
       query: GET_ALL_SUBJECT,
