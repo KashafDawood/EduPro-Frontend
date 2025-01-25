@@ -17,7 +17,7 @@ export default function Student() {
   }, [students, fetchStudents]);
 
   useEffect(() => {
-    if (data?.findAllStudent && (!students || students.length === 0)) {
+    if (data?.findAllStudent) {
       setStudents(data.findAllStudent);
     }
   }, [data, students]);

@@ -41,20 +41,21 @@ export const studentForm: FormSchema = () => [
   {
     name: "guardianPhone",
     label: "Guardian Phone",
-    type: "number",
+    type: "text",
     required: true,
   },
   {
     name: "guardianCNIC",
     label: "Guardian CNIC",
-    type: "number",
+    type: "text",
     required: true,
   },
   { name: "guardianProfession", label: "Guardian Profession", type: "text" },
   {
     name: "guardianProfessionType",
     label: "Guardian Profession Type",
-    type: "text",
+    type: "select",
+    options: ["gov", "private"],
   },
   {
     name: "guardianMonthlyIncome",
@@ -62,7 +63,7 @@ export const studentForm: FormSchema = () => [
     type: "number",
   },
   {
-    name: "class",
+    name: "Class",
     label: "Class",
     type: "autoComplete",
     query: GET_ALL_CLASSES,
@@ -70,7 +71,7 @@ export const studentForm: FormSchema = () => [
     required: true,
   },
   {
-    name: "subject",
+    name: "Subject",
     label: "Subject",
     type: "multiselect",
     query: GET_ALL_SUBJECT,
