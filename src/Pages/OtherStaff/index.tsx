@@ -17,7 +17,7 @@ export default function OtherStaff() {
   }, [otherStaff, fetchOtherStaff]);
 
   useEffect(() => {
-    if (data?.findAllStaffs && (!otherStaff || otherStaff.length === 0)) {
+    if (data?.findAllStaffs) {
       setOtherStaff(data.findAllStaffs);
     }
   }, [data, otherStaff]);
