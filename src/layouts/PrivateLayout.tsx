@@ -7,6 +7,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 function PrivateLayout() {
   const defaultOpen = localStorage.getItem("sidebar:state") === "true";
@@ -28,6 +29,7 @@ function PrivateLayout() {
         <SidebarTrigger />
         <SidebarInset className="flex-1 overflow-auto">
           <Outlet />
+          <Toaster />
         </SidebarInset>
       </SidebarProvider>
     </div>

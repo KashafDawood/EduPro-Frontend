@@ -17,6 +17,7 @@ import AsyncMultiselect from "../Custom/multiselect";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { generateZodSchema, transformFormData } from "./commonForm-helper";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -38,6 +39,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
   const formSchema = FORMS[formName]();
   const zodSchema = generateZodSchema(formSchema);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const { toast } = useToast();
 
   const {
     control,
@@ -58,6 +60,18 @@ export const CommonForm: React.FC<CommonFormProps> = ({
   const handleFormSubmit = (data: Record<string, string | number | null>) => {
     const transformedData = transformFormData(data, formSchema);
     onSubmit(transformedData);
+    toast({
+      title: `${formTitle.split(" ")[0]} added successfully!`,
+      description: new Date().toLocaleString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }),
+    });
     reset();
     setIsSheetOpen(false);
   };
