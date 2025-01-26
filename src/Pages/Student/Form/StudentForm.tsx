@@ -6,12 +6,19 @@ import { useMutation } from "@apollo/client/react/hooks";
 export const StudentForm = () => {
   const [createStudent, { error }] = useMutation(CREATE_STUDENT);
 
-  const onSubmit = (data: Record<string, string | number | Date | null>) => {
-    createStudent({
-      variables: data,
-      refetchQueries: ["FindAllStudent"],
-      awaitRefetchQueries: true,
-    });
+  const onSubmit = async (
+    data: Record<string, string | number | Date | null>
+  ): Promise<boolean> => {
+    try {
+      const result = await createStudent({
+        variables: data,
+        refetchQueries: ["FindAllStudent"],
+        awaitRefetchQueries: true,
+      });
+      return !!result.data;
+    } catch {
+      return false;
+    }
   };
 
   return (

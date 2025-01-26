@@ -4,16 +4,21 @@ import { CommonForm } from "@/components/CommonForm";
 import { useMutation } from "@apollo/client/react/hooks";
 
 export const ExpenseForm = () => {
-  const [createExpense, { error }] = useMutation<{ message: string }>(
-    CREATE_EXPENSE
-  );
+  const [createExpense, { error }] = useMutation(CREATE_EXPENSE);
 
-  const onSubmit = (data: Record<string, string | number | Date | null>) => {
-    createExpense({
-      variables: data,
-      refetchQueries: ["FindAllExpenses"],
-      awaitRefetchQueries: true,
-    });
+  const onSubmit = async (
+    data: Record<string, string | number | Date | null>
+  ): Promise<boolean> => {
+    try {
+      const result = await createExpense({
+        variables: data,
+        refetchQueries: ["FindAllExpenses"],
+        awaitRefetchQueries: true,
+      });
+      return !!result.data;
+    } catch {
+      return false;
+    }
   };
 
   return (

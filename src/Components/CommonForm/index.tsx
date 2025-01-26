@@ -25,7 +25,9 @@ interface CommonFormProps {
   formName: keyof typeof FORMS;
   formTitle: string;
   buttonLabel: string;
-  onSubmit: (data: Record<string, string | number | Date | null>) => void;
+  onSubmit: (
+    data: Record<string, string | number | Date | null>
+  ) => Promise<boolean>;
 }
 
 interface DefaultValues {
@@ -59,23 +61,28 @@ export const CommonForm: React.FC<CommonFormProps> = ({
     ),
   });
 
-  const handleFormSubmit = (data: Record<string, string | number | null>) => {
+  const handleFormSubmit = async (
+    data: Record<string, string | number | null>
+  ) => {
     const transformedData = transformFormData(data, formSchema);
-    onSubmit(transformedData);
-    toast({
-      title: `${formTitle.split(" ")[0]} added successfully!`,
-      description: new Date().toLocaleString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-      }),
-    });
-    reset();
-    setIsSheetOpen(false);
+    const success = await onSubmit(transformedData);
+
+    if (success) {
+      toast({
+        title: `${formTitle.split(" ")[0]} added successfully!`,
+        description: new Date().toLocaleString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        }),
+      });
+      reset();
+      setIsSheetOpen(false);
+    }
   };
 
   return (

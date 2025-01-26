@@ -5,12 +5,20 @@ import { useMutation } from "@apollo/client/react/hooks";
 
 export const SubjectForm = () => {
   const [createSubject, { error }] = useMutation(CREATE_SUBJECT);
-  const onSubmit = (data: Record<string, string | number | Date | null>) => {
-    createSubject({
-      variables: data,
-      refetchQueries: ["FindAllSubject"],
-      awaitRefetchQueries: true,
-    });
+
+  const onSubmit = async (
+    data: Record<string, string | number | Date | null>
+  ): Promise<boolean> => {
+    try {
+      const result = await createSubject({
+        variables: data,
+        refetchQueries: ["FindAllSubject"],
+        awaitRefetchQueries: true,
+      });
+      return !!result.data;
+    } catch {
+      return false;
+    }
   };
 
   return (

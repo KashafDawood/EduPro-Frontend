@@ -5,13 +5,20 @@ import { useMutation } from "@apollo/client/react/hooks";
 
 export const OtherStaffForm = () => {
   const [createOtherStaff, { error }] = useMutation(CREATE_OTHER_STAFF);
-  const onSubmit = (data: Record<string, string | number | Date | null>) => {
-    console.log(data);
-    createOtherStaff({
-      variables: data,
-      refetchQueries: ["FindAllStaffs"],
-      awaitRefetchQueries: true,
-    });
+
+  const onSubmit = async (
+    data: Record<string, string | number | Date | null>
+  ): Promise<boolean> => {
+    try {
+      const result = await createOtherStaff({
+        variables: data,
+        refetchQueries: ["FindAllStaffs"],
+        awaitRefetchQueries: true,
+      });
+      return !!result.data;
+    } catch {
+      return false;
+    }
   };
 
   return (
