@@ -4,7 +4,7 @@ import { GET_ALL_SUBJECT } from "@/APIs/SubjectAPI/getAllSubject";
 
 export const studentForm: FormSchema = () => [
   { name: "studentName", label: "Student Name", type: "text", required: true },
-  { name: "studentCNIC", label: "Student CNIC", type: "text", required: true },
+  { name: "studentCNIC", label: "Student CNIC", type: "cnic", required: true },
   {
     name: "gender",
     label: "Gender",
@@ -47,7 +47,7 @@ export const studentForm: FormSchema = () => [
   {
     name: "guardianCNIC",
     label: "Guardian CNIC",
-    type: "text",
+    type: "cnic",
     required: true,
   },
   { name: "guardianProfession", label: "Guardian Profession", type: "text" },

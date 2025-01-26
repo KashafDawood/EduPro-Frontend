@@ -55,13 +55,13 @@ export const teacherForm: FormSchema = () => {
     {
       name: "CNIC",
       label: "CNIC",
-      type: "text",
+      type: "cnic",
       required: true,
     },
     {
       name: "guardianCNIC",
       label: "Guardian CNIC",
-      type: "text",
+      type: "cnic",
       required: true,
     },
     {

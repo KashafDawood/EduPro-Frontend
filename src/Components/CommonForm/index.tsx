@@ -89,7 +89,10 @@ export const CommonForm: React.FC<CommonFormProps> = ({
       <form className="space-y-2">
         {formSchema.map((field: FormFieldSchema, index: number) => (
           <div key={`${field.name}-${index}`} className="space-y-1.5">
-            <Label htmlFor={field.name} className="text-sm font-medium">
+            <Label
+              htmlFor={field.name}
+              className="text-sm font-medium text-muted-foreground"
+            >
               {field.label}
               {field.required && <span className="text-red-500 ml-1">*</span>}
             </Label>

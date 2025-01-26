@@ -59,7 +59,7 @@ export const otherStaffForm: FormSchema = () => {
     {
       name: "guardianCNIC",
       label: "Guardian CNIC",
-      type: "text",
+      type: "cnic",
       required: true,
     },
     {
