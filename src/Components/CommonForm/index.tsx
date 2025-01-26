@@ -93,13 +93,10 @@ export const CommonForm: React.FC<CommonFormProps> = ({
       setIsSheetOpen={setIsSheetOpen}
       handleSubmit={handleSubmit(handleFormSubmit)}
     >
-      <form className="space-y-2">
+      <form className="space-y-4">
         {formSchema.map((field: FormFieldSchema, index: number) => (
           <div key={`${field.name}-${index}`} className="space-y-1.5">
-            <Label
-              htmlFor={field.name}
-              className="text-sm font-medium text-muted-foreground"
-            >
+            <Label htmlFor={field.name} className="text-sm font-medium">
               {field.label}
               {field.required && <span className="text-red-500 ml-1">*</span>}
             </Label>
