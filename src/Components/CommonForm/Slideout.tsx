@@ -9,6 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { DialogDescription } from "@/components/ui/dialog";
 
 interface SlideoutProps {
   formTitle: string;
@@ -38,6 +39,10 @@ export const Slideout: React.FC<SlideoutProps> = ({
       <SheetContent className="overflow-scroll p-6">
         <SheetHeader>
           <SheetTitle>{formTitle}</SheetTitle>
+          <DialogDescription>
+            Fill in the details below to add a new{" "}
+            {buttonLabel.split(" ").slice(1, 3).join(" ").toLowerCase()}.
+          </DialogDescription>
         </SheetHeader>
 
         <div className="mt-4">{children}</div>

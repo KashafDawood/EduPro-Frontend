@@ -6,6 +6,7 @@ import { useMutation } from "@apollo/client/react/hooks";
 export const OtherStaffForm = () => {
   const [createOtherStaff, { error }] = useMutation(CREATE_OTHER_STAFF);
   const onSubmit = (data: Record<string, string | number | Date | null>) => {
+    console.log(data);
     createOtherStaff({
       variables: data,
       refetchQueries: ["FindAllStaffs"],

@@ -53,7 +53,7 @@ export const otherStaffForm: FormSchema = () => {
     {
       name: "CNIC",
       label: "CNIC",
-      type: "text",
+      type: "cnic",
       required: true,
     },
     {

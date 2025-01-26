@@ -18,6 +18,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { generateZodSchema, transformFormData } from "./commonForm-helper";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { CNICInput } from "@/components/ui/cnic-input";
+import { Label } from "@/components/ui/label";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -84,9 +86,13 @@ export const CommonForm: React.FC<CommonFormProps> = ({
       setIsSheetOpen={setIsSheetOpen}
       handleSubmit={handleSubmit(handleFormSubmit)}
     >
-      <form className="space-y-4">
+      <form className="space-y-2">
         {formSchema.map((field: FormFieldSchema, index: number) => (
-          <div key={`${field.name}-${index}`}>
+          <div key={`${field.name}-${index}`} className="space-y-1.5">
+            <Label htmlFor={field.name} className="text-sm font-medium">
+              {field.label}
+              {field.required && <span className="text-red-500 ml-1">*</span>}
+            </Label>
             <Controller
               control={control}
               name={field.name}
@@ -98,8 +104,8 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                         onValueChange={onChange}
                         value={value ?? undefined}
                       >
-                        <SelectTrigger>
-                          <SelectValue placeholder={field.label} />
+                        <SelectTrigger id={field.name}>
+                          <SelectValue placeholder={`Select ${field.label}`} />
                         </SelectTrigger>
                         <SelectContent>
                           {"options" in field &&
@@ -148,10 +154,11 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                   case "text":
                     return (
                       <Input
+                        id={field.name}
                         type="text"
                         value={value ?? ""}
                         onChange={onChange}
-                        placeholder={field.label}
+                        placeholder={`Enter ${field.label}`}
                       />
                     );
 
@@ -165,13 +172,22 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                       />
                     );
 
+                  case "cnic":
+                    return (
+                      <CNICInput
+                        value={value ?? ""}
+                        onChange={onChange}
+                        placeholder={field.label}
+                      />
+                    );
+
                   default:
                     return <></>;
                 }
               }}
             />
             {errors[field.name] && (
-              <p className="text-red-500 text-sm">
+              <p className="text-red-500 text-xs">
                 {errors[field.name]?.message}
               </p>
             )}
