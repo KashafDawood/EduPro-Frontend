@@ -56,7 +56,10 @@ export function MultiSelect({
   return (
     <div>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger
+          className={cn(value.length === 0 && "text-muted-foreground")}
+          asChild
+        >
           <Button
             variant="outline"
             role="combobox"

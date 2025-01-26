@@ -36,10 +36,11 @@ export function Autocomplete({
   onChange: (value: string) => void;
 }) {
   const [open, setOpen] = React.useState(false);
+  const selectedOption = options.find((option) => option.id === value);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger className={cn(!value && "text-muted-foreground")} asChild>
         <Button
           variant="outline"
           role="combobox"
@@ -47,7 +48,7 @@ export function Autocomplete({
           className="w-full justify-between"
         >
           {value
-            ? options.find((option) => option.id === value)?.name
+            ? selectedOption?.name
             : placeholder
             ? `${placeholder}...`
             : "Search..."}

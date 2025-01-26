@@ -1,4 +1,5 @@
 import * as React from "react";
+import { cn } from "@/lib/utils";
 import {
   Popover,
   PopoverContent,
@@ -25,7 +26,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger
+        className={cn(!selected && "text-muted-foreground")}
+        asChild
+      >
         <Button variant="outline" className="w-full justify-between">
           {selected
             ? `${placeholder} : ${format(selected, "PPP")}`

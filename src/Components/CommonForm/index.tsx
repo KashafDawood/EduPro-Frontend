@@ -114,7 +114,10 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                         onValueChange={onChange}
                         value={value ?? undefined}
                       >
-                        <SelectTrigger id={field.name}>
+                        <SelectTrigger
+                          id={field.name}
+                          className="text-muted-foreground"
+                        >
                           <SelectValue placeholder={`Select ${field.label}`} />
                         </SelectTrigger>
                         <SelectContent>
