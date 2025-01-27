@@ -4,7 +4,7 @@ import AlertSuccess from "@/components/Alerts/successAlert";
 import AlertError from "@/components/Alerts/errorAlert";
 import useAuth from "@/hooks/useAuth";
 import { useUserStore } from "@/store/userStore";
-import LoginForm from "@/components/LoginForm/LoginForm";
+import LoginForm from "@/Pages/Login/Form/LoginForm";
 
 const Login: React.FC = () => {
   const { isAuth } = useUserStore();

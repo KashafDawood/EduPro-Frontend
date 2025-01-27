@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { generateZodSchema, transformFormData } from "./commonForm-helper";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { CNICInput } from "@/components/ui/cnic-input";
+import { CNICInput } from "@/components/Custom/cnic-input";
 import { Label } from "@/components/ui/label";
 
 interface CommonFormProps {
