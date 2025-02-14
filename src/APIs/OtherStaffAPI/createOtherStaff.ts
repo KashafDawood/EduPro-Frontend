@@ -4,7 +4,7 @@ export const CREATE_OTHER_STAFF = gql`
   mutation CreateStaff(
     $name: String!
     $CNIC: String!
-    $photo: String!
+    $photo: String
     $phone: String!
     $gender: String!
     $address: String!
@@ -12,11 +12,11 @@ export const CREATE_OTHER_STAFF = gql`
     $guardianRelation: String!
     $guardianPhone: String!
     $guardianCNIC: String!
-    $qualification: String!
-    $dateOfBirth: DateTime!
+    $qualification: String
+    $dateOfBirth: DateTime
     $dateOfJoining: DateTime!
     $role: String!
-    $salary: Float!
+    $salary: Float
   ) {
     createStaff(
       createStaffInput: {

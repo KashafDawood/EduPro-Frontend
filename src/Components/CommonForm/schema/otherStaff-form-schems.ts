@@ -66,7 +66,6 @@ export const otherStaffForm: FormSchema = () => {
       name: "dateOfBirth",
       label: "Date of Birth",
       type: "date",
-      required: true,
     },
     {
       name: "dateOfJoining",
@@ -78,7 +77,6 @@ export const otherStaffForm: FormSchema = () => {
       name: "qualification",
       label: "Qualification",
       type: "text",
-      required: true,
     },
     {
       name: "role",
@@ -90,7 +88,6 @@ export const otherStaffForm: FormSchema = () => {
       name: "salary",
       label: "Salary",
       type: "number",
-      required: true,
     },
   ];
 };
