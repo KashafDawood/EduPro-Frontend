@@ -3,9 +3,9 @@ import { gql } from "@apollo/client/core/core.cjs";
 export const CREATE_SUBJECT = gql`
   mutation CreateSubject(
     $name: String!
-    $marks: Float!
-    $totalMarks: Float!
-    $percentage: Float!
+    $marks: Float
+    $totalMarks: Float
+    $percentage: Float
   ) {
     createSubject(
       createSubjectInput: {
