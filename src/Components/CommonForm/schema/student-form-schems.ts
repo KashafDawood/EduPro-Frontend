@@ -21,7 +21,7 @@ export const studentForm: FormSchema = () => [
   },
   { name: "address", label: "Address", type: "text", required: true },
   { name: "studentRollNumber", label: "Student Roll Number", type: "text" },
-  { name: "religious", label: "Religious", type: "text", required: true },
+  { name: "religious", label: "Religious", type: "text" },
   { name: "numberOfSiblings", label: "Number of Siblings", type: "number" },
   { name: "admissionFee", label: "Admission Fee", type: "number" },
   { name: "monthlyFee", label: "Monthly Fee", type: "number" },
@@ -68,13 +68,11 @@ export const studentForm: FormSchema = () => [
     type: "autoComplete",
     query: GET_ALL_CLASSES,
     optional: "section",
-    required: true,
   },
   {
     name: "Subject",
     label: "Subject",
     type: "multiselect",
     query: GET_ALL_SUBJECT,
-    required: true,
   },
 ];

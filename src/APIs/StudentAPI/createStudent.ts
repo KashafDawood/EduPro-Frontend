@@ -7,8 +7,8 @@ export const CREATE_STUDENT = gql`
     $gender: String!
     $dateOfBirth: DateTime!
     $address: String!
-    $studentRollNumber: String!
-    $religious: String!
+    $studentRollNumber: String
+    $religious: String
     $guardianName: String!
     $guardianRelation: String!
     $guardianPhone: String!
@@ -16,13 +16,13 @@ export const CREATE_STUDENT = gql`
     $Subject: [ID!]!
     $Class: ID!
     $dateOfAdmission: DateTime!
-    $numberOfSiblings: Float!
-    $admissionFee: Float!
-    $monthlyFee: Float!
-    $photo: String!
-    $guardianProfession: String!
-    $guardianProfessionType: String!
-    $guardianMonthlyIncome: Float!
+    $numberOfSiblings: Float
+    $admissionFee: Float
+    $monthlyFee: Float
+    $photo: String
+    $guardianProfession: String
+    $guardianProfessionType: String
+    $guardianMonthlyIncome: Float
   ) {
     createStudent(
       createStudentInput: {

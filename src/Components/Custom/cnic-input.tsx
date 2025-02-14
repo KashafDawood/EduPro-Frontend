@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "./input-otp";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 import type { OTPInputProps } from "input-otp";
 import { cn } from "@/lib/utils";
 
