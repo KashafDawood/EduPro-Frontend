@@ -70,20 +70,17 @@ export const teacherForm: FormSchema = () => {
       type: "multiselect",
       query: GET_ALL_CLASSES,
       optional: "section",
-      required: true,
     },
     {
       name: "Subject",
       label: "Subjects",
       type: "multiselect",
       query: GET_ALL_SUBJECT,
-      required: true,
     },
     {
       name: "dateOfBirth",
       label: "Date of Birth",
       type: "date",
-      required: true,
     },
     {
       name: "dateOfJoining",
@@ -101,7 +98,6 @@ export const teacherForm: FormSchema = () => {
       name: "salary",
       label: "Salary",
       type: "number",
-      required: true,
     },
   ];
 };

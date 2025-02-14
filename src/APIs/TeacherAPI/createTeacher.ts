@@ -4,7 +4,7 @@ export const CREATE_TEACHER = gql`
   mutation CreateTeacher(
     $name: String!
     $CNIC: String!
-    $photo: String!
+    $photo: String
     $phone: String!
     $gender: String!
     $address: String!
@@ -13,9 +13,9 @@ export const CREATE_TEACHER = gql`
     $guardianPhone: String!
     $guardianCNIC: String!
     $qualification: String!
-    $dateOfBirth: DateTime!
+    $dateOfBirth: DateTime
     $dateOfJoining: DateTime!
-    $salary: Float!
+    $salary: Float
     $Class: [ID!]!
     $Subject: [ID!]!
   ) {
