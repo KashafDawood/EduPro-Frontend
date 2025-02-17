@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { CNICInput } from "@/components/Custom/cnic-input";
 import { Label } from "@/components/ui/label";
 import CustomSelect from "../Custom/select";
+import ProfilePictureUpload from "../Custom/profile-picture-upload";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -108,7 +109,11 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                       <CustomSelect
                         onChange={onChange}
                         value={value ?? ""}
-                        field={{ ...field, options: field.options ?? [] }}
+                        field={{
+                          ...field,
+                          label: field.label ?? "",
+                          options: field.options ?? [],
+                        }}
                       />
                     );
 
@@ -177,16 +182,15 @@ export const CommonForm: React.FC<CommonFormProps> = ({
 
                   case "photo":
                     return (
-                      <Input
-                        id={field.name}
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0] || null;
-                          setPhotoFile(file);
-                          onChange(file?.name || "");
-                        }}
-                      />
+                      <div className="flex justify-center">
+                        <ProfilePictureUpload
+                          value={value ?? ""}
+                          onChange={(file) => {
+                            setPhotoFile(file);
+                            onChange(file?.name || "");
+                          }}
+                        />
+                      </div>
                     );
 
                   default:

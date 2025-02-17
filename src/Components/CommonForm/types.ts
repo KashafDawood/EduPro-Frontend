@@ -2,7 +2,7 @@ import { DocumentNode } from "graphql";
 
 export interface FormFieldSchema {
   name: string;
-  label: string;
+  label?: string;
   type:
     | "text"
     | "select"

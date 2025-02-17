@@ -3,6 +3,10 @@ import { FormSchema } from "../types";
 export const otherStaffForm: FormSchema = () => {
   return [
     {
+      name: "photo",
+      type: "photo",
+    },
+    {
       name: "name",
       label: "Name",
       type: "text",
@@ -26,11 +30,6 @@ export const otherStaffForm: FormSchema = () => {
       label: "Guardian Phone",
       type: "text",
       required: true,
-    },
-    {
-      name: "photo",
-      label: "Photo",
-      type: "text",
     },
     {
       name: "address",

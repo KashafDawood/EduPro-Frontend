@@ -5,6 +5,10 @@ import { GET_ALL_SUBJECT } from "@/APIs/SubjectAPI/getAllSubject";
 export const teacherForm: FormSchema = () => {
   return [
     {
+      name: "photo",
+      type: "photo",
+    },
+    {
       name: "name",
       label: "Name",
       type: "text",
@@ -28,11 +32,6 @@ export const teacherForm: FormSchema = () => {
       label: "Guardian Phone",
       type: "text",
       required: true,
-    },
-    {
-      name: "photo",
-      label: "Photo",
-      type: "text",
     },
     {
       name: "address",
