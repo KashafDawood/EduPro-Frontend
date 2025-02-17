@@ -23,16 +23,22 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   placeholder,
 }) => {
   const [month, setMonth] = React.useState<Date>(selected || new Date());
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleSelect = (date: Date | undefined) => {
+    onSelect(date);
+    setIsOpen(false);
+  };
 
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger
         className={cn(!selected && "text-muted-foreground")}
         asChild
       >
         <Button variant="outline" className="w-full justify-between">
           {selected
-            ? `${placeholder} : ${format(selected, "PPP")}`
+            ? `${format(selected, "PPP")}`
             : placeholder || "Pick a date"}
           <CalendarIcon className="ml-2 h-4 w-4" />
         </Button>
@@ -41,7 +47,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         <DayPicker
           mode="single"
           selected={selected}
-          onSelect={onSelect}
+          onSelect={handleSelect}
           month={month}
           onMonthChange={setMonth}
           fromYear={1950} // Adjust as needed

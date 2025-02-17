@@ -23,7 +23,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 }) => {
   return (
     <Select onValueChange={onChange} value={value ?? undefined}>
-      <SelectTrigger id={field.name} className="text-muted-foreground">
+      <SelectTrigger
+        id={field.name}
+        className={value ? "" : "text-muted-foreground"}
+      >
         <SelectValue placeholder={`Select ${field.label}`} />
       </SelectTrigger>
       <SelectContent>
