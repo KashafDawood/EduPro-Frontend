@@ -1,22 +1,21 @@
 import { DocumentNode } from "graphql";
 
-export type FormFieldType =
-  | "text"
-  | "number"
-  | "select"
-  | "date"
-  | "autoComplete"
-  | "multiselect"
-  | "cnic";
-
 export interface FormFieldSchema {
   name: string;
-  label?: string;
-  type?: FormFieldType;
-  optional?: string;
-  options?: string[];
+  label: string;
+  type:
+    | "text"
+    | "select"
+    | "date"
+    | "number"
+    | "cnic"
+    | "autoComplete"
+    | "multiselect"
+    | "photo";
   required?: boolean;
+  options?: string[];
   query?: DocumentNode;
+  optional?: string;
 }
 
 export type FormSchema = () => FormFieldSchema[];

@@ -26,7 +26,8 @@ interface CommonFormProps {
   formTitle: string;
   buttonLabel: string;
   onSubmit: (
-    data: Record<string, string | number | Date | null>
+    data: Record<string, string | number | Date | null>,
+    photoFile: File | null
   ) => Promise<boolean>;
 }
 
@@ -44,6 +45,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
   const zodSchema = generateZodSchema(formSchema);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { toast } = useToast();
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
 
   const {
     control,
@@ -65,7 +67,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
     data: Record<string, string | number | null>
   ) => {
     const transformedData = transformFormData(data, formSchema);
-    const success = await onSubmit(transformedData);
+    const success = await onSubmit(transformedData, photoFile);
 
     if (success) {
       toast({
@@ -82,6 +84,7 @@ export const CommonForm: React.FC<CommonFormProps> = ({
       });
       reset();
       setIsSheetOpen(false);
+      setPhotoFile(null);
     }
   };
 
@@ -188,6 +191,20 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                         value={value ?? ""}
                         onChange={onChange}
                         placeholder={field.label}
+                      />
+                    );
+
+                  case "photo":
+                    return (
+                      <Input
+                        id={field.name}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0] || null;
+                          setPhotoFile(file);
+                          onChange(file?.name || "");
+                        }}
                       />
                     );
 

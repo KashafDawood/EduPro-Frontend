@@ -25,7 +25,7 @@ export const studentForm: FormSchema = () => [
   { name: "numberOfSiblings", label: "Number of Siblings", type: "number" },
   { name: "admissionFee", label: "Admission Fee", type: "number" },
   { name: "monthlyFee", label: "Monthly Fee", type: "number" },
-  { name: "photo", label: "Photo", type: "text" },
+  { name: "photo", label: "Photo", type: "photo" },
   {
     name: "guardianName",
     label: "Guardian Name",
@@ -50,12 +50,18 @@ export const studentForm: FormSchema = () => [
     type: "cnic",
     required: true,
   },
-  { name: "guardianProfession", label: "Guardian Profession", type: "text" },
+  {
+    name: "guardianProfession",
+    label: "Guardian Profession",
+    type: "text",
+    required: true,
+  },
   {
     name: "guardianProfessionType",
     label: "Guardian Profession Type",
     type: "select",
     options: ["gov", "private"],
+    required: true,
   },
   {
     name: "guardianMonthlyIncome",
