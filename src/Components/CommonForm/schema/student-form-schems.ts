@@ -3,6 +3,7 @@ import { FormSchema } from "../types";
 import { GET_ALL_SUBJECT } from "@/APIs/SubjectAPI/getAllSubject";
 
 export const studentForm: FormSchema = () => [
+  { name: "photo", type: "photo" },
   { name: "studentName", label: "Student Name", type: "text", required: true },
   { name: "studentCNIC", label: "Student CNIC", type: "cnic", required: true },
   {
@@ -25,7 +26,6 @@ export const studentForm: FormSchema = () => [
   { name: "numberOfSiblings", label: "Number of Siblings", type: "number" },
   { name: "admissionFee", label: "Admission Fee", type: "number" },
   { name: "monthlyFee", label: "Monthly Fee", type: "number" },
-  { name: "photo", label: "Photo", type: "photo" },
   {
     name: "guardianName",
     label: "Guardian Name",
