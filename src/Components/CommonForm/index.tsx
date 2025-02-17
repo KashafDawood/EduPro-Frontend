@@ -1,12 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { DatePicker } from "../ui/datepicker";
 import { FORMS } from "./schema";
 import { Slideout } from "./Slideout";
@@ -20,6 +14,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CNICInput } from "@/components/Custom/cnic-input";
 import { Label } from "@/components/ui/label";
+import CustomSelect from "../Custom/select";
 
 interface CommonFormProps {
   formName: keyof typeof FORMS;
@@ -110,25 +105,11 @@ export const CommonForm: React.FC<CommonFormProps> = ({
                 switch (field.type) {
                   case "select":
                     return (
-                      <Select
-                        onValueChange={onChange}
-                        value={value ?? undefined}
-                      >
-                        <SelectTrigger
-                          id={field.name}
-                          className="text-muted-foreground"
-                        >
-                          <SelectValue placeholder={`Select ${field.label}`} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {"options" in field &&
-                            field.options?.map((option: string) => (
-                              <SelectItem key={option} value={option}>
-                                {option}
-                              </SelectItem>
-                            ))}
-                        </SelectContent>
-                      </Select>
+                      <CustomSelect
+                        onChange={onChange}
+                        value={value ?? ""}
+                        field={{ ...field, options: field.options ?? [] }}
+                      />
                     );
 
                   case "autoComplete":
