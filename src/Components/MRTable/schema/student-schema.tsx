@@ -5,10 +5,31 @@ export const StudentSchema: TableSchema = {
   styles: defaultStyles,
   TableSchema: [
     {
-      id: "studentName",
-      accessorKey: "studentName",
-      header: "Student Name",
+      id: "studentInfo",
+      header: "Student",
       size: defaultSize,
+      isVisible: true,
+      Cell: ({
+        row,
+      }: {
+        row: { original: { photo: string; studentName: string } };
+      }) => (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {row.original.photo && (
+            <img
+              src={row.original.photo}
+              style={{
+                objectFit: "cover",
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                marginRight: "10px",
+              }}
+            />
+          )}
+          <span>{row.original.studentName}</span>
+        </div>
+      ),
     },
     {
       id: "studentCNIC",
@@ -68,12 +89,6 @@ export const StudentSchema: TableSchema = {
       id: "monthlyFee",
       accessorKey: "monthlyFee",
       header: "Monthly Fee",
-      size: defaultSize,
-    },
-    {
-      id: "photo",
-      accessorKey: "photo",
-      header: "Photo",
       size: defaultSize,
     },
     {
