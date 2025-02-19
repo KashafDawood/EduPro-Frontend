@@ -5,10 +5,31 @@ export const OtherStaffSchema: TableSchema = {
   styles: defaultStyles,
   TableSchema: [
     {
-      id: "name",
-      accessorKey: "name",
+      id: "otherstaffInfo",
       header: "Name",
       size: defaultSize,
+      isVisible: true,
+      Cell: ({
+        row,
+      }: {
+        row: { original: { photo: string; name: string } };
+      }) => (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {row.original.photo && (
+            <img
+              src={row.original.photo}
+              style={{
+                objectFit: "cover",
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                marginRight: "10px",
+              }}
+            />
+          )}
+          <span>{row.original.name}</span>
+        </div>
+      ),
     },
     {
       id: "phone",
@@ -20,12 +41,6 @@ export const OtherStaffSchema: TableSchema = {
       id: "guardianPhone",
       accessorKey: "guardianPhone",
       header: "Guardian Phone",
-      size: defaultSize,
-    },
-    {
-      id: "photo",
-      accessorKey: "photo",
-      header: "Photo",
       size: defaultSize,
     },
     {
