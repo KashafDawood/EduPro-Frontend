@@ -8,9 +8,15 @@ interface MRTableProps {
   name: keyof typeof schema;
   loading: boolean;
   data: JSON[];
+  additionalRowProps: any;
 }
 
-function MRTable({ name, data = [], loading }: MRTableProps) {
+function MRTable({
+  name,
+  data = [],
+  loading,
+  additionalRowProps,
+}: MRTableProps) {
   const meta = schema[name];
 
   const table = useMaterialReactTable({
@@ -28,6 +34,14 @@ function MRTable({ name, data = [], loading }: MRTableProps) {
     // enableRowVirtualization: true,
     // enableColumnVirtualization: true,
     enablePagination: false,
+    muiTableBodyRowProps: ({ row }) => ({
+      onClick: () => {
+        additionalRowProps?.onRowClick(row);
+      },
+      sx: {
+        cursor: additionalRowProps?.onRowClick ? "pointer" : "",
+      },
+    }),
   });
 
   return <MaterialReactTable table={table} />;

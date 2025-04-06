@@ -31,7 +31,12 @@ export default function Student() {
         <StudentForm />
       </div>
       <div className="mt-4">
-        <MRTable name="StudentTable" data={students || []} loading={loading} />
+        <MRTable
+          name="StudentTable"
+          data={students || []}
+          loading={loading}
+          additionalRowProps={{ onRowClick: (row) => console.log(row) }}
+        />
       </div>
     </div>
   );
